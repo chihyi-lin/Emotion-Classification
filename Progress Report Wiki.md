@@ -3,10 +3,14 @@
 * Look at data
 * Decide on topic
 * Prepare work environment: Git & Github
+
 ## Goals achieved (fill at the end of each work week)
 * Looked at data
-* Decided on topic: Emotion Classification
-* Defined the classes of interface (in progress)
+* Prepared work environment
+* Decided on topic and data: Emotion Classification (ISEAR)
+* Started implementing evaluation
+* Defined classes of the model (still in progress)
+
 ## Plans for next week (fill at the end of each work week)
-* Prepare work environment
-* Start to implement evaluation
+* Continue implementing evaluation
+* Continue defining classes of the model
