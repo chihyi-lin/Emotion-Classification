@@ -6,6 +6,7 @@
 ## Goals achieved (fill at the end of each work week)
 * Looked at data
 * Decided on topic: Emotion Classification
+* Defined the classes of interface (in progress)
 ## Plans for next week (fill at the end of each work week)
 * Prepare work environment
 * Start to implement evaluation
