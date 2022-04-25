@@ -7,7 +7,7 @@
 * Meeting completed and questions answered
 
 ## Plans for next week (fill at the end of each work week)
-* Complete the implementation of evalation
+* Complete the implementation of evaluation
 * Start baseline method
 
 ## Remarks
