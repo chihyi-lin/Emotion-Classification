@@ -1,3 +1,20 @@
+# Session 2: 2022-04-25
+## Goals for today (fill at the beginning of each work week)
+* Meeting 
+* Figure out the F score to predict emotions
+
+## Goals achieved (fill at the end of each work week)
+* Meeting completed and questions answered
+
+## Plans for next week (fill at the end of each work week)
+* Complete the implementation of evalation
+* Start baseline method
+
+## Remarks
+* Next week only Lai will attend the meeting, and he prefers the timeslot from 9:45am to 11:15am because he would like to attend another class afterwards
+
+
+
 # Session 1: 2022-04-11
 ## Goals for today (fill at the beginning of each work week)
 * Look at data
@@ -14,3 +31,4 @@
 ## Plans for next week (fill at the end of each work week)
 * Continue implementing evaluation
 * Continue defining classes of the model
+* 
