@@ -1,61 +1,54 @@
-import re
-import pandas as pd
+file_path = "isear-train.csv"
 
-# Load Dataset, add header, start index from 1
-df = pd.read_csv("isear-train.csv", names=["Emotion", "Text"], on_bad_lines='skip')
-df.index = df.index+1
-print(df.head())
+gold = []     # gold = [['1st label', '1st text', 'text1_id'], ['2nd label', '2nd text', 'text2_id']]
+with open(file_path, 'r') as f:
+    for line in f:
+        line = line.replace("\n", "").split(",")
+        gold.append(line)
 
-# Value counts
-emotion_counts = df['Emotion'].value_counts()
-print(f'original counts: {emotion_counts}')
-print(f'shape: {df.shape}')
-print(f'describe: {df.describe()}')
+# Drop texts without label: 10 has been removed. len(data_list)=5355
+# Assign text_id to each text, 5345 text_id in total (?Why not = 5355?)
+label_dict = {'joy', 'fear', 'guilt', 'anger', 'shame', 'disgust', 'sadness'}
+text_id = 1
+for i in gold:
+    if i[0] not in label_dict:
+        gold.remove(i)
+    else:
+        i.append(text_id)
+        text_id += 1
 
-# drop invalid rows
-df = df.loc[df['Emotion'].str.contains('joy|guilt|sadness|anger|shame|disgust|fear', regex=True)]
-n_emotion_counts = df['Emotion'].value_counts()
-print(f'new counts: {n_emotion_counts}')
-print(f'new shape: {df.shape}')
-print(f'new describe: {df.describe()}')
+# Create list of predicted label with each class evenly distributed: 765 / 765 / 765 / 765 / 765 / 765 / 765
+predict = [x[:] for x in gold]
+for j in predict[:765]:
+    j[0] = 'joy'
+for j in predict[765:765*2]:
+    j[0] = 'fear'
+for j in predict[765*2:765*3]:
+    j[0] = 'guilt'
+for j in predict[765*3:765*4]:
+    j[0] = 'anger'
+for j in predict[765*4:765*5]:
+    j[0] = 'shame'
+for j in predict[765*5:765*6]:
+    j[0] = 'disgust'
+for j in predict[765*6:]:
+    j[0] = 'sadness'
 
-# Add new columns [Actual joy] and [Predicted joy]
-df['Actual joy'] = 0
-df.loc[df['Emotion'] == 'joy', 'Actual joy'] = 1
-print(df.head(5))
-"""
-4 invalid rows still remain:
-Need to be removed: 1
-Need to be categorized into data frame: 3
-"""
+# ? How to build counts for 'tp', 'fp', 'tn', 'fn'= {'tp': {'joy': 333, 'fear':222...}, 'fp': {'joy': 2, 'fear': 80}...}?
+counts = {}
+for line_g in gold:
+    for line_p in predict:
+        if line_g[0] == line_p[0]:
+            l_dict = counts.get('tp', {})
+            l_dict[line_p[0]] = 1
+        # else:
+        #     counts['tp'][line_p[0]] = 1
+        #
+        # if line_g[0] != line_p[0]:
+        #     if 'fp' in counts and line_p[0] in counts['fp']:
+        #         counts['fp'][line_p[0]] += 1
+        #     elif 'fp' in counts:
+        #         counts['fp'][line_p[0]] = 0
 
-# ? Predict all texts as joy and calculate the f-score?
 
-# F-score formula
-# f_score = 2 * (precision * recall) / (precision + recall)
-# precision = tp / (tp+fp)
-# recall = tp / (tp+fn)
-"""
-Emotion / Text / Actual joy / Predicted joy
-                  0/1            0/1
 
-Actual Classes:
-joy - 1: 777
-not joy - 0: 5333-777=4556
-
-Prediction:
-joy - 1: 5333
-not joy: 0
-
-Confusion matrix:
-         Actual class
-model    tp:777     fp:4556
-         fn:0       tn:0
-
-precision: 777/4556 = 0.1705
-recall: 777/777 = 1
-f1-score = 2*0.17*1 / 0.17+1 = 0.34/1.17 = 0.29
-
-"""
-def compute_tp_tn_fn_fp():
-    tp = sum(act == 1) & (pred == 1)
