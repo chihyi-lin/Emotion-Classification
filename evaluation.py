@@ -34,21 +34,37 @@ for j in predict[765*5:765*6]:
 for j in predict[765*6:]:
     j[0] = 'sadness'
 
-# ? How to build counts for 'tp', 'fp', 'tn', 'fn'= {'tp': {'joy': 333, 'fear':222...}, 'fp': {'joy': 2, 'fear': 80}...}?
-counts = {}
-for line_g in gold:
-    for line_p in predict:
-        if line_g[0] == line_p[0]:
-            l_dict = counts.get('tp', {})
-            l_dict[line_p[0]] = 1
-        # else:
-        #     counts['tp'][line_p[0]] = 1
-        #
-        # if line_g[0] != line_p[0]:
-        #     if 'fp' in counts and line_p[0] in counts['fp']:
-        #         counts['fp'][line_p[0]] += 1
-        #     elif 'fp' in counts:
-        #         counts['fp'][line_p[0]] = 0
 
+class Evaluation:
+    def __init__(self):
+        self.eval = {}
 
+# Build counts for 'tp', 'fp', 'tn', 'fn' for each class= {'joy': {'tp': 333, 'fp': 222, 'tn':2}...}
+    def __calculate_tp_fp_fn(self):
+        for g, p in zip(gold, predict):
+            # when gold label = predicted label, eval['joy']['tp'] +1
+            if g[0] == p[0]:
+                self.eval[g[0]] = self.eval.get(g[0], {})
+                self.eval[g[0]]['tp'] = self.eval[g[0]].get('tp', 0) + 1
+            # when gold label != predicted label, eval[predicted label]['fp'] +1, eval[gold label]['fn'] +1
+            if g[0] != p[0]:
+                self.eval[p[0]] = self.eval.get(p[0], {})
+                self.eval[p[0]]['fp'] = self.eval[p[0]].get('fp', 0) + 1
+                self.eval[g[0]] = self.eval.get(g[0], {})
+                self.eval[g[0]]['fn'] = self.eval[g[0]].get('fn', 0) + 1
 
+    def f_score(self, label):
+        self.__calculate_tp_fp_fn()
+        precision = self.eval[label]['tp'] / (self.eval[label]['tp'] + self.eval[label]['fp'])
+        recall = self.eval[label]['tp'] / (self.eval[label]['tp'] + self.eval[label]['fn'])
+        f_score = 2 * precision * recall / (precision + recall)
+        return f_score
+
+# e = Evaluation()
+# print(e.f_score('joy'))
+# print(e.f_score('fear'))
+# print(e.f_score('shame'))
+# print(e.f_score('disgust'))
+# print(e.f_score('guilt'))
+# print(e.f_score('anger'))
+# print(e.f_score('sadness'))
