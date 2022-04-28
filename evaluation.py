@@ -3,7 +3,7 @@ file_path = "isear-train.csv"
 gold = []     # gold = [['1st label', '1st text', 'text1_id'], ['2nd label', '2nd text', 'text2_id']]
 with open(file_path, 'r') as f:
     for line in f:
-        line = line.replace("\n", "").split(",")
+        line = line.replace("\n", "").split(",", 1)
         gold.append(line)
 
 # Drop texts without label: 10 has been removed. len(data_list)=5355
