@@ -1,13 +1,14 @@
 # Session 2: 2022-04-25
 ## Goals for today (fill at the beginning of each work week)
-* Complete the implementation of evaluation 
-* Implement on baseline
+* Complete the implementation of evaluation
+* Implement baseline: figure out which features to extract from each emotion, so as to calculate the vectors
 
 ## Goals achieved (fill at the end of each work week)
-* Complete the implementation of evaluation
-* Implement on baseline: feature extraction
+* Completed the implementation of evaluation
+* Implemented baseline: feature extraction on emotion ‘joy’ done
 
 ## Plans for next week (fill at the end of each work week)
+* Research on perceptron
 * Complete the implementation of baseline
 
 
