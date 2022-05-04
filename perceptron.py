@@ -6,56 +6,71 @@ class Perceptron:
     doc = Document()
     doc = doc.tokenized_text
 
-    def __init__(self):
-        self.weights = self.initial_weights()
+    def __init__(self, label):
+        self.weights = self.__initial_weights()
+        # self.weights = {'token': weight}
+        self.label = label
+        self.feature_value = 1
+        # self.feature_value is set for updating self.weights,
+        # and feature vector is boolean: [1, 0, 1, 1, 0...] that's why it's set to 1.
+        # ? Is it correct to set feature value =1 ?
 
-    def initial_weights(self):
+    def __initial_weights(self):
         weights = dict()
-        for line in self.doc:
-            tokens = line[1]
+        for doc in self.doc:
+            tokens = doc[1]
             for token in tokens:
                 weights[token] = 0.1
         return weights
 
-    def prediction(self):
-        for doc in self.doc:
-            sum = 0
-            tokens = doc[1]
-            for token in tokens:
-                weighted_x = self.weights[token]
-                sum += weighted_x
-            doc.append(sum)
-        return self.doc
+    def __weighted_sum(self, doc):
+        """Sum of x*w"""
+        sum = 0
+        tokens = doc[1]
+        for token in tokens:
+            weighted_x = self.weights[token]
+            sum += weighted_x
+        return sum
 
     def update_weights(self):
-        for i in range(10):
+        epochs = 100
+        for i in range(epochs):
+            print("update weights epoch " + str(i) + " out of " + str(epochs))
             for doc in self.doc:
                 gold = doc[0]
-                predict = doc[-1]
+                predict = self.__weighted_sum(doc)
                 tokens = doc[1]
-                if gold == 'joy' and predict > 0:
+                if gold == self.label and predict > 0:
                     pass
-                if gold != 'joy' and predict < 0:
+                if gold != self.label and predict < 0:
                     pass
-                if gold == 'joy' and predict < 0:
+                if gold == self.label and predict < 0:
                     for token in tokens:
-                        self.weights[token] = self.weights[token]+0.1
-                        #?correct prediction?
-                if gold != 'joy' and predict > 0:
+                        self.weights[token] = self.weights[token] + self.feature_value
+                if gold != self.label and predict > 0:
                     for token in tokens:
-                        self.weights[token] = self.weights[token]-0.1
-        # print keys which have value > 0 -> keys which belongs to 'joy'
-        # for k,v in self.weights.items():
-        #     if v > 0:
-        #         print(k)
+                        self.weights[token] = self.weights[token] - self.feature_value
+
+            # TODO 2.after each epoch print the current fscore for label "joy",
+            # so we can know how is the current training process
+            # we can e.g. stop the training (break out of the for loop),
+            # if the fscore for "joy" has reached e.g. 80% accuracy
+
+    def predict_all(self):
+        """Append final prediction results to each document."""
+        for doc in self.doc:
+            doc.append(self.__weighted_sum(doc))
+        return self.doc
+
+# TODO 1.build multi-class perceptron
 
 
 
-
-p = Perceptron()
-p.prediction()
+p = Perceptron('joy')
 p.update_weights()
-score_for_happy = p.weights['happy']
-score_for_wonderful = p.weights['wonderful']
-score_for_school = p.weights['school']
-print(score_for_happy, score_for_wonderful, score_for_school)
+p = p.predict_all()
+# score_for_happy = p.weights['happy']
+# score_for_wonderful = p.weights['wonderful']
+# score_for_school = p.weights['school']
+# print(score_for_happy, score_for_wonderful, score_for_school)
+print(p)
