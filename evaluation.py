@@ -92,7 +92,11 @@ def run_evaluation():
     print("f score for joy: {} \n"
           "f score for fear: {} \n"
           "f score for guilt: {} \n"
-          .format(f_score_joy, f_score_fear, f_score_guilt))
+          "f score for anger: {} \n"
+          "f score for shame: {} \n"
+          "f score for disgust: {} \n"
+          "f score for sadness: {} \n"
+          .format(f_score_joy, f_score_fear, f_score_guilt, f_score_anger, f_score_shame, f_score_disgust, f_score_sadness))
 
 
 run_evaluation()
