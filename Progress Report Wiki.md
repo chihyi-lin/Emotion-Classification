@@ -1,3 +1,14 @@
+# Session 3: 2022-05-02
+## Goals for today (fill at the beginning of each work week)
+* Discuss the implemetation of the both two-class and  multi-class perceptron model 
+
+## Goals achieved (fill at the end of each work week)
+* Completed the baseline: the implementation of both two-class and multi-class perceptron model
+
+## Plans for next week (fill at the end of each work week)
+* Improve current implementation and plan more advanced approach 
+
+
 # Session 2: 2022-04-25
 ## Goals for today (fill at the beginning of each work week)
 * Complete the implementation of evaluation
