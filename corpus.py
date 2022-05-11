@@ -3,49 +3,61 @@ import re
 
 class Corpus:
 
-    # self.documents = [['1st label', '1st text', 'text1_id'], ['2nd label', '2nd text', 'text2_id']]
     def __init__(self, file_name):
         self.file_name = file_name
-        self.documents = self.remove_invalid_texts_and_assign_text_id()
+        # self.documents = [['1st label', '1st text', 'text1_id'], ['2nd label', '2nd text', 'text2_id']]
+        self.documents = self.assign_text_id()
 
     def __read_file(self) -> list:
         documents = list()
         with open(self.file_name, 'r') as f:
-            for line in f:
-                line = line.replace("\n", "").split(",", 1)
-                documents.append(line)
+            for doc in f:
+                doc = doc.replace("\n", "").split(",", 1)
+                documents.append(doc)
         return documents
 
-    def remove_invalid_texts_and_assign_text_id(self):
-        # Drop texts without labels: 10 have been removed. len(data_list)=5355
-        # Assign text_id to each text, 5345 text_id in total (?Why not = 5355?)
-        documents = self.__read_file()
+    def __remove_invalid_docs(self) -> list:
+        """
+        remove docs without labels and docs with invalid texts.
+        """
+        full_documents = self.__read_file()
+        labeled_documents = list()
         labels = {'joy', 'fear', 'guilt', 'anger', 'shame', 'disgust', 'sadness'}
+        for doc in full_documents:
+            label = doc[0]
+            if label in labels:
+                labeled_documents.append(doc)
+
+        regex = re.compile(r'\[.*\]|None.|NO RESPONSE.')
+        cleaned_documents = list()
+        for doc in labeled_documents:
+            text = doc[1]
+            if not regex.match(text):
+                cleaned_documents.append(doc)
+        return cleaned_documents
+
+    def assign_text_id(self) -> list:
+        documents = self.__remove_invalid_docs()
         text_id = 1
-        for line in documents:
-            if line[0] not in labels:
-                documents.remove(line)
-            else:
-                line.append(text_id)
-                text_id += 1
+        for doc in documents:
+            doc.append(text_id)
+            text_id += 1
         return documents
 
 
 class Document:
 
-    def __init__(self):
-        self.tokenized_text = self.tokenize()
+    def __init__(self, docs):
+        self.docs = docs
 
-    def tokenize(self):
-        """Convert texts into lowercase, remove punctuations, tokenize texts"""
-        d = Corpus(file_name='isear-train.csv')
-        documents = d.documents
-        for line in documents:
-            line[1] = line[1].lower()
-            line[1] = re.findall(r'[-\'\w]+', line[1])
-        return documents
-
-
-# doc = Document()
-# print(doc.tokenized_text)
-
+    def tokenize(self) -> list:
+        """
+        Convert texts into lowercase, remove punctuations, tokenizing texts.
+        :return: docs = [['1st label', ['1st tokenized text'], 1st text_id],...]
+        """
+        for doc in self.docs:
+            text = doc[1]
+            text = text.lower()
+            text = re.findall(r'[-\'\w]+', text)
+            doc[1] = text
+        return self.docs
