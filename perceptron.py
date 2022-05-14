@@ -19,6 +19,9 @@ class Perceptron:
         sum = 0
         tokens = doc[1]
         for token in tokens:
-            weighted_x = self.weights[token]
-            sum += weighted_x
+            if token in self.weights:
+                weighted_x = self.weights[token]
+                sum += weighted_x
+            else:
+                continue
         return sum
