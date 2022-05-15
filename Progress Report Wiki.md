@@ -6,7 +6,8 @@
 * Discuss how the multi-class perceptron model can be optimised 
 
 ## Goals achieved (fill at the end of each work week)
-* 
+* Start preparing the mid-term presentation
+* Start reading literature on the topic of emotion classification
 
 ## Plans for next week (fill at the end of each work week)
 * 
