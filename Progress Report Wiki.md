@@ -4,6 +4,7 @@
 * Combine the evaluator with the multi-class perceptron model
 * Check if corpus data is cleaned
 * Discuss how the multi-class perceptron model can be optimised 
+* Start the preparation of presentation
 
 ## Goals achieved (fill at the end of each work week)
 * Start preparing the mid-term presentation
@@ -12,7 +13,9 @@
 * Trained the multi-class perceptron on training data, tested the perceptron on validation data, and evaluated results with the evaluator
 
 ## Plans for next week (fill at the end of each work week)
-* 
+* Add bias and learning rate of the current model
+* Brainstorm on next-steps, i.e. questions that we would like to ask/discuss: 1)what does error analysis refer to? 2)our current ideas of research questions: optimisation of the model with e.g. gradiant descent, SVM, MIRA 
+* Further literature review on the topic
 
 
 
