@@ -9,7 +9,7 @@
 * Start preparing the mid-term presentation
 * Start reading literature on the topic of emotion classification
 * Implemented the class method to clean data
-* Ran the evaluator on both training data and validation data 
+* Trained the multi-class perceptron on training data, tested the perceptron on validation data, and evaluated results with the evaluator
 
 ## Plans for next week (fill at the end of each work week)
 * 
