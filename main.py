@@ -7,6 +7,7 @@ class Workflow:
 
     def __init__(self, iteration):
         self.training_data = self.preprocessing('isear-train.csv')
+        self.validation_data = self.preprocessing('isear-val.csv')
         self.iteration = iteration
 
     # Create documents as a nested list, tokenizing texts
@@ -19,10 +20,10 @@ class Workflow:
 
     # Instantiating MultiClassPerceptron, training on weights for assigned iterations and appending the results
     def training(self):
-        m = MultiClassPerceptron(self.training_data, self.iteration)
+        m = MultiClassPerceptron(self.training_data, self.validation_data, self.iteration)
         m.update_weights()
         m.append_prediction()
-        return m.docs
+        return m
 
     def evaluation(self, docs_with_predicted_label):
         eval = Evaluation(docs_with_predicted_label)
@@ -42,24 +43,18 @@ class Workflow:
               "f score for sadness: {} \n"
               .format(f_score_joy, f_score_fear, f_score_guilt, f_score_anger, f_score_shame, f_score_disgust, f_score_sadness))
 
-    def preprocessing_val_data(self):
-        val_data = self.preprocessing('isear-val.csv')
-        return val_data
-
-    def make_prediction_on_val_data(self):
-        val_data = self.preprocessing_val_data()
+    def make_prediction_on_val_data(self, multi_class_perceptron:MultiClassPerceptron):
+        val_data = multi_class_perceptron.validation_docs
         for doc in val_data:
-            find_max = dict()
-            for perceptron in MultiClassPerceptron.all_perceptrons:
-                find_max[perceptron.label] = perceptron.weighted_sum(doc)
-            predicted = max(find_max, key=find_max.get)
+            predicted = multi_class_perceptron.find_max_prediction(doc)
             doc.append(predicted)
         return val_data
 
 
 w = Workflow(20)
-docs = w.training()
-w.evaluation(docs)  # Print out f-score on training data
-w.preprocessing_val_data()
-val_docs = w.make_prediction_on_val_data()
-w.evaluation(val_docs)  # Print out f-score on validation data
+trained_perceptron = w.training()
+print("f scores for training data:")
+w.evaluation(trained_perceptron.docs)
+val_docs = w.make_prediction_on_val_data(trained_perceptron)
+print("f scores for validation data:")
+w.evaluation(val_docs)

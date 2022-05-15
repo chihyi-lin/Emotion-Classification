@@ -5,8 +5,9 @@ class MultiClassPerceptron:
 
     all_perceptrons = list()
 
-    def __init__(self, tokenized_docs, iteration):
-        self.docs = tokenized_docs
+    def __init__(self, training_docs, validation_docs, iteration):
+        self.docs = training_docs
+        self.validation_docs = validation_docs
         self.iteration = iteration
         # self.feature_value is used to add or subtract to/from the original weight whenever a sample is misclassified
         self.feature_value = 1
@@ -28,7 +29,7 @@ class MultiClassPerceptron:
 
     def find_max_prediction(self, doc) -> str:
         """Calculate weighted sum for each doc by different weight dictionaries from different perceptrons.
-        Take the result prediction from the perceptron which has the highest score."""
+        Take the label from perceptron which generates the highest score as predicted label."""
         find_max = dict()   # find_max = {'joy':50, 'fear':-15...}
         for perceptron in MultiClassPerceptron.all_perceptrons:
             find_max[perceptron.label] = perceptron.weighted_sum(doc)

@@ -24,6 +24,24 @@ class Evaluation:
                 self.eval[gold]['fn'] = self.eval[gold].get('fn', 0) + 1
         return self.eval
 
+    def get_tp(self, label):
+        if 'tp' in self.eval[label]:
+            return self.eval[label]['tp']
+        else:
+            return 0
+
+    def get_fp(self, label):
+        if 'fp' in self.eval[label]:
+            return self.eval[label]['fp']
+        else:
+            return 0
+
+    def get_fn(self, label):
+        if 'fn' in self.eval[label]:
+            return self.eval[label]['fn']
+        else:
+            return 0
+
     def precision(self, label):
         self.__calculate_tp_fp_fn()
         tp = self.eval[label]['tp']
