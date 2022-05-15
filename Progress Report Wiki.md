@@ -8,6 +8,8 @@
 ## Goals achieved (fill at the end of each work week)
 * Start preparing the mid-term presentation
 * Start reading literature on the topic of emotion classification
+* Implemented the class method to clean data
+* Ran the evaluator on both training data and validation data 
 
 ## Plans for next week (fill at the end of each work week)
 * 
