@@ -1,4 +1,4 @@
-# Session 4: 2022-05-09
+# Session 5: 2022-05-16
 ## Goals for today (fill at the beginning of each work week)
 * Combine the scripts of both two-class and multi-class perceptron models
 * Combine the evaluator with the multi-class perceptron model
@@ -25,7 +25,7 @@
 
 
 
-# Session 3: 2022-05-02
+# Session 4: 2022-05-09
 ## Goals for today (fill at the beginning of each work week)
 * Discuss the implemetation of the both two-class and  multi-class perceptron model 
 
@@ -34,6 +34,23 @@
 
 ## Plans for next week (fill at the end of each work week)
 * Improve current implementation and plan more advanced approach 
+
+
+# Session 3: 2022-05-02
+
+## Goals for today (fill at the beginning of each work week)
+* Complete the implementation of evaluation
+* Implement baseline: figure out which features to extract from each emotion, so as to calculate the vectors 
+
+## Goals achieved (fill at the end of each work week)
+* Completed the implementation of evaluation
+* Implemented baseline: feature extraction on emotion ‘joy’ done
+
+## Plans for next week (fill at the end of each work week)
+* Complete the implementation of baseline
+
+
+
 
 
 # Session 2: 2022-04-25
