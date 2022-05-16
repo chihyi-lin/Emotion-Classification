@@ -1,6 +1,7 @@
-# Session 6: 2022-05-23
+# Session 6: 2022-05-16
 ## Goals for today (fill at the beginning of each work week)
-
+* Literature review on next-steps
+* Discuss which direction we would like to take: more manually (i.e. error anaylsis) or more based on literature (e.g. comparing multi-class perceptron with gradiant descent)
 
 ## Goals achieved (fill at the end of each work week)
 
@@ -14,7 +15,7 @@
 
 
 
-# Session 5: 2022-05-16
+# Session 5: 2022-05-9
 ## Goals for today (fill at the beginning of each work week)
 * Combine the scripts of both two-class and multi-class perceptron models
 * Combine the evaluator with the multi-class perceptron model
@@ -29,7 +30,9 @@
 * Trained the multi-class perceptron on training data, tested the perceptron on validation data, and evaluated results with the evaluator
 
 ## Plans for next week (fill at the end of each work week)
-* 
+* Add bias and learning rate of the current model
+* Brainstorm on next-steps, i.e. questions that we would like to ask/discuss: 1)what does error analysis refer to? 2)our current ideas of research questions: optimisation of the model with e.g. gradiant descent, SVM, MIRA 
+* Further literature review on the topic
 
 
 
@@ -48,9 +51,7 @@
 
 ## Plans for next week (fill at the end of each work week)
 * Improve current implementation and plan more advanced approach 
-* * Add bias and learning rate of the current model
-* Brainstorm on next-steps, i.e. questions that we would like to ask/discuss: 1)what does error analysis refer to? 2)our current ideas of research questions: optimisation of the model with e.g. gradiant descent, SVM, MIRA 
-* Further literature review on the topic
+
 
 
 # Session 3: 2022-05-02
