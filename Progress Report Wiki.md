@@ -1,3 +1,19 @@
+# Session 6: 2022-05-23
+## Goals for today (fill at the beginning of each work week)
+
+
+## Goals achieved (fill at the end of each work week)
+
+
+## Plans for next week (fill at the end of each work week)
+
+
+
+
+
+
+
+
 # Session 5: 2022-05-16
 ## Goals for today (fill at the beginning of each work week)
 * Combine the scripts of both two-class and multi-class perceptron models
