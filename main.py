@@ -46,12 +46,15 @@ class Workflow:
     def make_prediction_on_val_data(self, multi_class_perceptron:MultiClassPerceptron):
         val_data = multi_class_perceptron.validation_docs
         for doc in val_data:
+            tokens = doc[1]
+            # append BIAS to the token list
+            tokens.append("BIAS")
             predicted = multi_class_perceptron.find_max_prediction(doc)
             doc.append(predicted)
         return val_data
 
 
-w = Workflow(20)
+w = Workflow(30)
 trained_perceptron = w.training()
 print("f scores for training data:")
 w.evaluation(trained_perceptron.docs)

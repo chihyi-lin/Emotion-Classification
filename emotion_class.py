@@ -1,4 +1,4 @@
-class Perceptron:
+class EmotionClass:
 
     def __init__(self, label, tokenized_docs):
         self.label = label
@@ -10,6 +10,8 @@ class Perceptron:
         weights = dict()
         for doc in self.docs:
             tokens = doc[1]
+            # append BIAS to the token list and later be added to weights
+            tokens.append("BIAS")
             for token in tokens:
                 weights[token] = 0
         return weights
@@ -22,6 +24,7 @@ class Perceptron:
             if token in self.weights:
                 weighted_x = self.weights[token]
                 sum += weighted_x
+            # When calculate on validation data, there will be tokens not in weights
             else:
                 continue
         return sum
