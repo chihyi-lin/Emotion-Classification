@@ -88,8 +88,8 @@ class Workflow:
 w = Workflow(20)
 docs = w.training()
 w.evaluation(docs)  # Print out f-score on training data
-w.accuracy(docs)
+w.accuracy(docs) # Print accuracy/micro average
 w.preprocessing_val_data()
 val_docs = w.make_prediction_on_val_data()
 w.evaluation(val_docs)  # Print out f-score on validation data
-w.accuracy(val_docs)
+w.accuracy(val_docs)  # Print accuracy/micro average
