@@ -1,4 +1,3 @@
-
 from corpus import *
 from multi_class_perceptron import *
 from evaluation import *
@@ -8,6 +7,7 @@ class Workflow:
 
     def __init__(self, iteration):
         self.training_data = self.preprocessing('isear-train.csv')
+        self.validation_data = self.preprocessing('isear-val.csv')
         self.iteration = iteration
 
     # Create documents as a nested list, tokenizing texts
@@ -20,10 +20,10 @@ class Workflow:
 
     # Instantiating MultiClassPerceptron, training on weights for assigned iterations and appending the results
     def training(self):
-        m = MultiClassPerceptron(self.training_data, self.iteration)
+        m = MultiClassPerceptron(self.training_data, self.validation_data, self.iteration)
         m.update_weights()
         m.append_prediction()
-        return m.docs
+        return m
 
     def evaluation(self, docs_with_predicted_label):
         eval = Evaluation(docs_with_predicted_label)
@@ -42,54 +42,54 @@ class Workflow:
               "f score for disgust: {} \n"
               "f score for sadness: {} \n"
               "f score in general(macro average): {} \n"
-              .format(f_score_joy, f_score_fear, f_score_guilt, f_score_anger, f_score_shame, f_score_disgust, f_score_sadness,(f_score_joy + f_score_fear + f_score_guilt + f_score_anger + f_score_shame + f_score_disgust + f_score_sadness)/7))
+              .format(f_score_joy, f_score_fear, f_score_guilt, f_score_anger, f_score_shame, f_score_disgust, f_score_sadness, (f_score_joy + f_score_fear + f_score_guilt + f_score_anger + f_score_shame + f_score_disgust + f_score_sadness)/7))
 
     def accuracy(self, docs_with_predicted_label):
         acc = Evaluation(docs_with_predicted_label)
-        tp_joy = acc.tp('joy')
-        tp_fear = acc.tp('fear')
-        tp_guilt = acc.tp('guilt')
-        tp_anger = acc.tp('anger')
-        tp_shame = acc.tp('shame')
-        tp_disgust = acc.tp('disgust')
-        tp_sadness = acc.tp('sadness')
-        fp_joy = acc.fp('joy')
-        fp_fear = acc.fp('fear')
-        fp_guilt = acc.fp('guilt')
-        fp_anger = acc.fp('anger')
-        fp_shame = acc.fp('shame')
-        fp_disgust = acc.fp('disgust')
-        fp_sadness = acc.fp('sadness')
-        fn_joy = acc.fn('joy')
-        fn_fear = acc.fn('fear')
-        fn_guilt = acc.fn('guilt')
-        fn_anger = acc.fn('anger')
-        fn_shame = acc.fn('shame')
-        fn_disgust = acc.fn('disgust')
-        fn_sadness = acc.fn('sadness')
+        tp_joy = acc.get_tp('joy')
+        tp_fear = acc.get_tp('fear')
+        tp_guilt = acc.get_tp('guilt')
+        tp_anger = acc.get_tp('anger')
+        tp_shame = acc.get_tp('shame')
+        tp_disgust = acc.get_tp('disgust')
+        tp_sadness = acc.get_tp('sadness')
+        fp_joy = acc.get_fp('joy')
+        fp_fear = acc.get_fp('fear')
+        fp_guilt = acc.get_fp('guilt')
+        fp_anger = acc.get_fp('anger')
+        fp_shame = acc.get_fp('shame')
+        fp_disgust = acc.get_fp('disgust')
+        fp_sadness = acc.get_fp('sadness')
+        fn_joy = acc.get_fn('joy')
+        fn_fear = acc.get_fn('fear')
+        fn_guilt = acc.get_fn('guilt')
+        fn_anger = acc.get_fn('anger')
+        fn_shame = acc.get_fn('shame')
+        fn_disgust = acc.get_fn('disgust')
+        fn_sadness = acc.get_fn('sadness')
         print("accuracy(micro average): {} \n"
-            .format((tp_joy + tp_fear + tp_guilt + tp_anger + tp_shame + tp_disgust + tp_sadness)/((tp_joy + tp_fear + tp_guilt + tp_anger + tp_shame + tp_disgust + tp_sadness)+ ((fp_joy + fp_fear + fp_guilt + fp_anger + fp_shame + fp_disgust + fp_sadness)+(fn_joy + fn_fear + fn_guilt + fn_anger + fn_shame + fn_disgust + fn_sadness)) * 0.5)))
+              .format((tp_joy + tp_fear + tp_guilt + tp_anger + tp_shame + tp_disgust + tp_sadness) / (
+                    (tp_joy + tp_fear + tp_guilt + tp_anger + tp_shame + tp_disgust + tp_sadness) + (
+                        (fp_joy + fp_fear + fp_guilt + fp_anger + fp_shame + fp_disgust + fp_sadness) + (
+                            fn_joy + fn_fear + fn_guilt + fn_anger + fn_shame + fn_disgust + fn_sadness)) * 0.5)))
 
-    def preprocessing_val_data(self):
-        val_data = self.preprocessing('isear-val.csv')
-        return val_data
-
-    def make_prediction_on_val_data(self):
-        val_data = self.preprocessing_val_data()
+    def make_prediction_on_val_data(self, multi_class_perceptron:MultiClassPerceptron):
+        val_data = multi_class_perceptron.validation_docs
         for doc in val_data:
-            find_max = dict()
-            for perceptron in MultiClassPerceptron.all_perceptrons:
-                find_max[perceptron.label] = perceptron.weighted_sum(doc)
-            predicted = max(find_max, key=find_max.get)
+            tokens = doc[1]
+            # append BIAS to the token list
+            tokens.append("BIAS")
+            predicted = multi_class_perceptron.find_max_prediction(doc)
             doc.append(predicted)
         return val_data
 
 
-w = Workflow(20)
-docs = w.training()
-w.evaluation(docs)  # Print out f-score on training data
-w.accuracy(docs) # Print accuracy/micro average
-w.preprocessing_val_data()
-val_docs = w.make_prediction_on_val_data()
-w.evaluation(val_docs)  # Print out f-score on validation data
-w.accuracy(val_docs)  # Print accuracy/micro average
+w = Workflow(10)
+trained_perceptron = w.training()
+print("f scores for training data:")
+w.evaluation(trained_perceptron.docs)
+w.accuracy(trained_perceptron.docs)  # Print accuracy/micro average
+val_docs = w.make_prediction_on_val_data(trained_perceptron)
+print("f scores for validation data:")
+w.evaluation(val_docs)
+w.accuracy(val_docs)
