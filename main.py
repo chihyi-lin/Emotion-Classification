@@ -41,7 +41,8 @@ class Workflow:
               "f score for shame: {} \n"
               "f score for disgust: {} \n"
               "f score for sadness: {} \n"
-              .format(f_score_joy, f_score_fear, f_score_guilt, f_score_anger, f_score_shame, f_score_disgust, f_score_sadness))
+              "f score in general: {} \n"
+              .format(f_score_joy, f_score_fear, f_score_guilt, f_score_anger, f_score_shame, f_score_disgust, f_score_sadness, (f_score_joy, f_score_fear, f_score_guilt, f_score_anger, f_score_shame, f_score_disgust, f_score_sadness)/7))
 
     def make_prediction_on_val_data(self, multi_class_perceptron:MultiClassPerceptron):
         val_data = multi_class_perceptron.validation_docs
