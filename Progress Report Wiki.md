@@ -1,6 +1,6 @@
 # Session 7: 2022-05-23
 ## Goals for today (fill at the beginning of each work week)
-* Baseline improvement: 1) Run experiment with different settings
+* Baseline improvement: 1) Run experiment with different settings(epochs, learning rate)
 * Working on the presentation: 1) Finalize slides
 * Discussion on next steps:
 
