@@ -1,4 +1,4 @@
-# Session 7: 2022-05-23
+# Session 6: 2022-05-23
 ## Goals for today (fill at the beginning of each work week)
 * Baseline improvement: 1) Run experiment with different settings(epochs, learning rate) - Lin ; 2) implementing results: i.e. macro vs. micro average/accuracy - Lai
 * Working on the presentation: 1) Finalize slides 2) Start recording - Lin and Lai
@@ -10,7 +10,7 @@
 ## Plans for next week (fill at the end of each work week)
 
 
-# Session 6: 2022-05-16
+# Session 5: 2022-05-16
 ## Goals for today (fill at the beginning of each work week)
 * Literature review on next-steps
 * Discuss which direction we would like to take: more manually (i.e. error anaylsis) or more based on literature (e.g. comparing multi-class perceptron with gradiant descent)
@@ -26,7 +26,7 @@
 * Run experiment with different settings
 
 
-# Session 5: 2022-05-9
+# Session 4: 2022-05-9
 ## Goals for today (fill at the beginning of each work week)
 * Combine the scripts of both two-class and multi-class perceptron models
 * Combine the evaluator with the multi-class perceptron model
