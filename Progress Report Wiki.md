@@ -1,22 +1,29 @@
+# Session 7: 2022-05-23
+## Goals for today (fill at the beginning of each work week)
+* Baseline improvement: 1) Run experiment with different settings
+* Working on the presentation: 1) Finalize slides
+* Discussion on next steps:
+
+## Goals achieved (fill at the end of each work week)
+
+
+## Plans for next week (fill at the end of each work week)
+
+
 # Session 6: 2022-05-16
 ## Goals for today (fill at the beginning of each work week)
 * Literature review on next-steps
 * Discuss which direction we would like to take: more manually (i.e. error anaylsis) or more based on literature (e.g. comparing multi-class perceptron with gradiant descent)
 * Baseline improvement
 * Working on the presentation slides
-* Discussion on next steps
 
 ## Goals achieved (fill at the end of each work week)
-* Tentatively decided to further the project on past studies, forming research question(s) based on literature: do better feature extraction improve the performance of two models (multi-class perceptron vs. SVM)?
+* Tentatively decided to further the project on past studies, forming research question(s) based on literature: do better feature extraction approaches improve the performance of two models (multi-class perceptron vs. SVM)?
 * Baseline improvement: 1) add bias and learning rate; 2)add average F-score
 
 ## Plans for next week (fill at the end of each work week)
-* Presentation slides still in progress
-
-
-
-
-
+* Finalize presentation slides
+* Run experiment with different settings
 
 
 # Session 5: 2022-05-9
