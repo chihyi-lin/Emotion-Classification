@@ -1,8 +1,8 @@
 # Session 7: 2022-05-23
 ## Goals for today (fill at the beginning of each work week)
-* Baseline improvement: 1) Run experiment with different settings(epochs, learning rate)
-* Working on the presentation: 1) Finalize slides
-* Discussion on next steps:
+* Baseline improvement: 1) Run experiment with different settings(epochs, learning rate) - Lin ; 2) implementing results: i.e. macro vs. micro average/accuracy - Lai
+* Working on the presentation: 1) Finalize slides 2) Start recording - Lin and Lai
+* Discussion on next steps: 1) improve pre-processing and feature extraction with tf-idf - Lin 2) start implementing SVM - Lai 
 
 ## Goals achieved (fill at the end of each work week)
 
