@@ -71,3 +71,39 @@ class Evaluation:
                          self.perclass_f_score('disgust') +
                          self.perclass_f_score('sadness')) / 7
         return macro_average
+
+    def tps(self):
+        tps = (self.get_tp('joy') +
+               self.get_tp('fear') +
+               self.get_tp('guilt') +
+               self.get_tp('anger') +
+               self.get_tp('shame') +
+               self.get_tp('disgust') +
+               self.get_tp('sadness'))
+        return tps
+
+    def fps(self):
+        fps = (self.get_fp('joy') +
+               self.get_fp('fear') +
+               self.get_fp('guilt') +
+               self.get_fp('anger') +
+               self.get_fp('shame') +
+               self.get_fp('disgust') +
+               self.get_fp('sadness'))
+        return fps
+
+    def fns(self):
+        fns = (self.get_fn('joy') +
+               self.get_fn('fear') +
+               self.get_fn('guilt') +
+               self.get_fn('anger') +
+               self.get_fn('shame') +
+               self.get_fn('disgust') +
+               self.get_fn('sadness'))
+        return fns
+
+    def micro_average(self):
+        micro_average = (self.tps /(self.tps + ((self.fps + self.fns) * 0.5)))
+        return micro_average
+
+
