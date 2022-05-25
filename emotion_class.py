@@ -8,10 +8,9 @@ class EmotionClass:
 
     def __initial_weights(self):
         weights = dict()
+        weights['BIAS'] = 0
         for doc in self.docs:
             tokens = doc[1]
-            # append BIAS to the token list and later be added to weights
-            tokens.append("BIAS")
             for token in tokens:
                 weights[token] = 0
         return weights

@@ -56,8 +56,18 @@ class Evaluation:
         recall = tp / (tp + fn)
         return recall
 
-    def f_score(self, label):
+    def perclass_f_score(self, label):
         precision = self.precision(label)
         recall = self.recall(label)
-        f_score = 2 * precision * recall / (precision + recall)
-        return f_score
+        perclass_f_score = 2 * precision * recall / (precision + recall)
+        return perclass_f_score
+
+    def macro_average(self):
+        macro_average = (self.perclass_f_score('joy') +
+                         self.perclass_f_score('fear') +
+                         self.perclass_f_score('guilt') +
+                         self.perclass_f_score('anger') +
+                         self.perclass_f_score('shame') +
+                         self.perclass_f_score('disgust') +
+                         self.perclass_f_score('sadness')) / 7
+        return macro_average
