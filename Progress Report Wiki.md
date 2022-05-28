@@ -9,8 +9,7 @@
 
 ## Plans for next week (fill at the end of each work week)
 * Literature review on progress 
-* Q: It seems different learning rate setting do not make a big difference. We would like to ask if it is common for the multi-class perceptron model. 
-
+* Q: It seems F-scores of different learning rates do not differ much. We would like to ask if it is common for the multi-class perceptron model. 
 
 # Session 5: 2022-05-16
 ## Goals for today (fill at the beginning of each work week)
