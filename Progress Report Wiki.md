@@ -5,11 +5,12 @@
 * Discussion on next steps: 1) improve pre-processing and feature extraction with tf-idf - Lin 2) start implementing SVM - Lai 
 
 ## Goals achieved (fill at the end of each work week)
-
+* Baseline improved
+* Slides finalised
 
 ## Plans for next week (fill at the end of each work week)
 * Literature review on progress 
-* Q: It seems F-scores of different learning rates do not differ much. We would like to ask if it is common for the multi-class perceptron model. 
+* Questions to discuss and present: 1) It seems F-scores of different learning rates do not differ much. We would like to ask if it is common for the multi-class perceptron model. 2) The research question is whether performance improves combining different feature extractions using different machine learning models. 
 
 # Session 5: 2022-05-16
 ## Goals for today (fill at the beginning of each work week)
