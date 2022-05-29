@@ -2,6 +2,7 @@
 ## Goals for today (fill at the beginning of each work week)
 * Start recording: finalise the presentation scripts and slides 
 * Upload recording by Sunday (5 June)
+* Video editing
 
 ## Goals achieved (fill at the end of each work week)
 
