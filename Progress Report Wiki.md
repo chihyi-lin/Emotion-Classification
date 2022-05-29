@@ -1,3 +1,21 @@
+# Session 7: 2022-05-30
+## Goals for today (fill at the beginning of each work week)
+* Start recording: finalise the presentation scripts and slides 
+* Upload recording by Sunday (5 June)
+
+## Goals achieved (fill at the end of each work week)
+
+
+## Plans for next week (fill at the end of each work week)
+
+
+
+
+
+
+
+
+
 # Session 6: 2022-05-23
 ## Goals for today (fill at the beginning of each work week)
 * Baseline improvement: 1) Run experiment with different settings(epochs, learning rate) - Lin ; 2) implementing results: i.e. macro vs. micro average/accuracy - Lai
