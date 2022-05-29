@@ -18,7 +18,7 @@ class Workflow:
         tokenized_data = d.tokenize()
         return tokenized_data
 
-    # Instantiating MultiClassPerceptron, training on weights for assigned iterations and appending the results
+    # Instantiating MultiClassPerceptron, train and evaluate on each iteration and choose the settings that yield the best performance.
     def training(self):
         m = MultiClassPerceptron(self.training_data, self.validation_data, self.iteration)
         for doc in self.training_data:
@@ -27,7 +27,7 @@ class Workflow:
         m.choose_optimal_epoch()
         return m
 
-
-# Experiment: learning rate = 0.001
-w = Workflow(60)
+# Best settings: learning rate=0.001, epochs=34
+w = Workflow(34)
 trained_perceptron = w.training()
+trained_perceptron.perclass_f_score()

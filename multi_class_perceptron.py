@@ -54,12 +54,9 @@ class MultiClassPerceptron:
                                 emotion_class.weights[token] = emotion_class.weights[token] - (self.l_rate * self.feature_value)
                             if emotion_class.label == gold:
                                 emotion_class.weights[token] = emotion_class.weights[token] + (self.l_rate * self.feature_value)
-                # Append prediction to doc
-                if i == 0:
-                    doc.append(predicted)
-                else:
-                    doc[3] = predicted
-            # Make prediction on validation set
+            # Make prediction on the train set
+            self.__predict_on_train_data(i)
+            # Make prediction on the validation set
             self.__predict_on_val_data(i)
             # Save and print each epoch status
             self.__save_current_epoch_status(i)
@@ -72,6 +69,17 @@ class MultiClassPerceptron:
             find_max[emotion_class.label] = emotion_class.weighted_sum(doc)
         prediction = max(find_max, key=find_max.get)
         return prediction
+
+    def __predict_on_train_data(self, i):
+        if i == 0:
+            for doc in self.docs:
+                predicted = self.find_max_prediction(doc)
+                doc.append(predicted)
+        if i != 0:
+            for doc in self.docs:
+                predicted = self.find_max_prediction(doc)
+                doc[3] = predicted
+        return self.docs
 
     def __predict_on_val_data(self, i):
         if i == 0:
@@ -88,8 +96,10 @@ class MultiClassPerceptron:
     def __save_current_epoch_status(self, i):
         e1 = Evaluation(self.docs)
         macro_for_train = e1.macro_average()
+        micro_for_train = e1.micro_average()
         e2 = Evaluation(self.validation_docs)
         macro_for_val = e2.macro_average()
+        micro_for_val = e2.micro_average()
         # self.save_epochs = {1:{train:0.36, val:0.41}, 2:{train:0.36, val:0.41}...}
         self.save_epochs[i + 1] = self.save_epochs.get(i + 1, {})
         self.save_epochs[i + 1]['train'] = self.save_epochs[i + 1].get('train', macro_for_train)
@@ -97,7 +107,9 @@ class MultiClassPerceptron:
 
         print("training epoch {} of {}".format(i+1, self.iteration))
         print("\tmacro for train set: {}".format(macro_for_train))
+        print("\tmicro for train set: {}".format(micro_for_train))
         print("\tmacro for validation set: {}".format(macro_for_val))
+        print("\tmicro for validation set: {}".format(micro_for_val))
 
     def choose_optimal_epoch(self):
         """Find the key-value pair which has the highest macro for validation set in self.save_epochs"""
@@ -108,3 +120,21 @@ class MultiClassPerceptron:
                 max_val = scores['val']
                 optimal = epoch, scores
         print("optimal epoch:", optimal)
+
+    def perclass_f_score(self):
+        evaluator = Evaluation(self.validation_docs)
+        f_score_for_joy = evaluator.perclass_f_score('joy')
+        f_score_for_fear = evaluator.perclass_f_score('fear')
+        f_score_for_guilt = evaluator.perclass_f_score('guilt')
+        f_score_for_anger = evaluator.perclass_f_score('anger')
+        f_score_for_shame = evaluator.perclass_f_score('shame')
+        f_score_for_disgust = evaluator.perclass_f_score('disgust')
+        f_score_for_sadness = evaluator.perclass_f_score('sadness')
+        print("per-class f-scores on validation set: ")
+        print("joy: {}".format(f_score_for_joy))
+        print("fear: {}".format(f_score_for_fear))
+        print("guilt: {}".format(f_score_for_guilt))
+        print("anger: {}".format(f_score_for_anger))
+        print("shame: {}".format(f_score_for_shame))
+        print("disgust: {}".format(f_score_for_disgust))
+        print("sadness: {}".format(f_score_for_sadness))

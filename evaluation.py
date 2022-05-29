@@ -7,6 +7,7 @@ class Evaluation:
         # self.eval is a counter for 'tp', 'fp', 'tn', 'fn' for each class= {'joy': {'tp': 333, 'fp': 222, 'tn':2}...}
         self.eval = {}
         self.docs = docs
+        self.__calculate_tp_fp_fn()
 
     def __calculate_tp_fp_fn(self) -> dict:
         for doc in self.docs:
@@ -43,16 +44,14 @@ class Evaluation:
             return 0
 
     def precision(self, label):
-        self.__calculate_tp_fp_fn()
-        tp = self.eval[label]['tp']
-        fp = self.eval[label]['fp']
+        tp = self.eval[label].get('tp', 0)
+        fp = self.eval[label].get('fp', 0)
         precision = tp / (tp + fp)
         return precision
 
     def recall(self, label):
-        self.__calculate_tp_fp_fn()
-        tp = self.eval[label]['tp']
-        fn = self.eval[label]['fn']
+        tp = self.eval[label].get('tp', 0)
+        fn = self.eval[label].get('fn', 0)
         recall = tp / (tp + fn)
         return recall
 
@@ -103,7 +102,5 @@ class Evaluation:
         return fns
 
     def micro_average(self):
-        micro_average = (self.tps /(self.tps + ((self.fps + self.fns) * 0.5)))
+        micro_average = self.tps() / (self.tps() + ((self.fps() + self.fns()) * 0.5))
         return micro_average
-
-
