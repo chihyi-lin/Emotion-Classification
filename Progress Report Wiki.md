@@ -1,8 +1,9 @@
 # Session 7: 2022-05-30
 ## Goals for today (fill at the beginning of each work week)
-* Start recording: finalise the presentation scripts and slides 
-* Upload recording by Sunday (5 June)
+* Start recording: finalise the presentation scripts and slides by Wednesday (1 June) 
 * Video editing
+* Upload recording by Sunday (5 June)
+* Error analysis and further literature review
 
 ## Goals achieved (fill at the end of each work week)
 
