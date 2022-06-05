@@ -1,5 +1,5 @@
 # Session 8: 2022-06-06
-https://github.com/chihyi-lin/Emotion-Classification/edit/main/
+Github code repository: https://github.com/chihyi-lin/Emotion-Classification
 ## Goals for today (fill at the beginning of each work week)
 * watch the videos of other groups
 * further literature review
