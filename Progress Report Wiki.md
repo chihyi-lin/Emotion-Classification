@@ -1,9 +1,9 @@
-# Session 7: 2022-05-30
+# Session 8: 2022-06-06
+https://github.com/chihyi-lin/Emotion-Classification/edit/main/
 ## Goals for today (fill at the beginning of each work week)
-* Start recording: finalise the presentation scripts and slides 
-* Upload recording by Sunday (5 June)
-* Video editing
-
+* watch the videos of other groups
+* further literature review
+* try implementing next steps
 ## Goals achieved (fill at the end of each work week)
 
 
@@ -16,6 +16,20 @@
 
 
 
+# Session 7: 2022-05-30
+## Goals for today (fill at the beginning of each work week)
+* Start recording: finalise the presentation scripts and slides by Wednesday (1 June) 
+* Video editing
+* Upload recording by Sunday (5 June)
+* Error analysis and further literature review
+
+## Goals achieved (fill at the end of each work week)
+* error analysis completed
+* presentation finalised and video uploaded
+
+## Plans for next week (fill at the end of each work week)
+* watch the videos of other groups
+* further literature review
 
 # Session 6: 2022-05-23
 ## Goals for today (fill at the beginning of each work week)
