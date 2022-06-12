@@ -5,10 +5,11 @@ Github code repository: https://github.com/chihyi-lin/Emotion-Classification
 * further literature review
 * try implementing next steps
 ## Goals achieved (fill at the end of each work week)
-
+* watch the videos of other groups
+* further literature review
 
 ## Plans for next week (fill at the end of each work week)
-
+* Attend Q&A session and discuss next steps based on feedbacks 
 
 
 
