@@ -61,20 +61,3 @@ class Document:
             text = re.findall(r'[-\'\w]+', text)
             doc[1] = text
         return self.docs
-
-
-# Counts how many instances in each class in the training set
-# c = Corpus('isear-train.csv')
-# docs = c.documents
-# counter = dict()
-# for doc in docs:
-#     label = doc[0]
-#     counter[label] = counter.get(label, 0)+1
-# print(counter)
-# c = Corpus('isear-val.csv')
-# docs = c.documents
-# counter = dict()
-# for doc in docs:
-#     label = doc[0]
-#     counter[label] = counter.get(label, 0)+1
-# print(counter)

@@ -7,9 +7,9 @@ class Evaluation:
         # self.eval is a counter for 'tp', 'fp', 'tn', 'fn' for each class= {'joy': {'tp': 333, 'fp': 222, 'tn':2}...}
         self.eval = {}
         self.docs = docs
-        self.__calculate_tp_fp_fn()
+        self.calculate_tp_fp_fn()
 
-    def __calculate_tp_fp_fn(self) -> dict:
+    def calculate_tp_fp_fn(self) -> dict:
         for doc in self.docs:
             # when gold label = predicted label, eval['joy']['tp'] +1
             gold = doc[0]

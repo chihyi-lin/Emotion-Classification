@@ -1,5 +1,5 @@
-from emotion_class import *
-from evaluation import *
+from classifiers.perceptron_baseline_emotion_classes import *
+from evaluation.evaluation import *
 import pickle
 
 class MultiClassPerceptron:
@@ -15,7 +15,7 @@ class MultiClassPerceptron:
         self.feature_value = 1
         self.save_epochs = dict()
         # Directory in which to save trained models
-        self.OUTPUT_PATH = "classifier_models/"
+        self.OUTPUT_PATH = "../trained_classifiers/"
 
         self.joy = EmotionClass('joy', self.docs)
         self.fear = EmotionClass('fear', self.docs)
@@ -144,13 +144,13 @@ class MultiClassPerceptron:
 
     def save_classifier(self, classifier_name):
         """
-        Saves classifier as a .pickle file to the classifier_models directory.
+        Saves classifiers as a .pickle file to the trained_classifiers directory.
         """
         with open(self.OUTPUT_PATH + classifier_name + ".pik", 'wb') as f:
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
     @staticmethod
     def load_classifier(classifier_name):
-        OUTPUT_PATH = "classifier_models/"
+        OUTPUT_PATH = "../trained_classifiers/"
         with open(OUTPUT_PATH + classifier_name + ".pik", 'rb') as f:
             return pickle.load(f)

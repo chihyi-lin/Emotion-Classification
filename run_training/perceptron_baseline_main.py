@@ -1,12 +1,13 @@
-from corpus import *
-from multi_class_perceptron import *
+from preprocessing.preprocessing_baseline import *
+from classifiers.perceptron_baseline import *
+
 
 
 class TrainingProcess:
 
     def __init__(self, iteration):
-        self.training_data = self.preprocessing('isear-train.csv')
-        self.validation_data = self.preprocessing('isear-val.csv')
+        self.training_data = self.preprocessing('../data/isear-train.csv')
+        self.validation_data = self.preprocessing('../data/isear-val.csv')
         self.iteration = iteration
 
     # Create documents as a nested list, tokenizing texts
@@ -52,23 +53,23 @@ def workflow():
     #     if i in weight_for_anger.keys():
     #         print(i, weight_for_anger[i])
     """Error analysis: look up the weights for falsely classified documents from validation set"""
-    baseline.all_emotion_classes.append(baseline.joy)
-    baseline.all_emotion_classes.append(baseline.fear)
-    baseline.all_emotion_classes.append(baseline.guilt)
-    baseline.all_emotion_classes.append(baseline.anger)
-    baseline.all_emotion_classes.append(baseline.shame)
-    baseline.all_emotion_classes.append(baseline.disgust)
-    baseline.all_emotion_classes.append(baseline.sadness)
-    val_docs = baseline.validation_docs
-    for doc in val_docs:
-        gold = doc[0]
-        predicted = doc[3]
-        find_max = dict()
-        if gold != predicted:
-            for emotion_class in baseline.all_emotion_classes:
-                find_max[emotion_class.label] = emotion_class.weighted_sum(doc)
-
-    return find_max
+    # baseline.all_emotion_classes.append(baseline.joy)
+    # baseline.all_emotion_classes.append(baseline.fear)
+    # baseline.all_emotion_classes.append(baseline.guilt)
+    # baseline.all_emotion_classes.append(baseline.anger)
+    # baseline.all_emotion_classes.append(baseline.shame)
+    # baseline.all_emotion_classes.append(baseline.disgust)
+    # baseline.all_emotion_classes.append(baseline.sadness)
+    # val_docs = baseline.validation_docs
+    # for doc in val_docs:
+    #     gold = doc[0]
+    #     predicted = doc[3]
+    #     find_max = dict()
+    #     if gold != predicted:
+    #         for emotion_class in baseline.all_emotion_classes:
+    #             find_max[emotion_class.label] = emotion_class.weighted_sum(doc)
+    #
+    # return find_max
 
 
 workflow()
