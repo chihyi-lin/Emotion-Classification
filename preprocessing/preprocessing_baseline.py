@@ -51,6 +51,7 @@ class Document:
         self.docs = docs
 
     def tokenize(self) -> list:
+        #  TODO: Use NLTK to tokenize texts.
         """
         Convert texts into lowercase, remove punctuations, tokenizing texts.
         :return: docs = [['1st label', ['1st tokenized text'], 1st text_id],...]
@@ -58,6 +59,7 @@ class Document:
         for doc in self.docs:
             text = doc[1]
             text = text.lower()
+            text = re.sub("(\\W|\\d)", " ", text)
             text = re.findall(r'[-\'\w]+', text)
             doc[1] = text
         return self.docs
