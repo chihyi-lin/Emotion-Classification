@@ -15,7 +15,7 @@ class MultiClassPerceptron:
         self.feature_value = 1
         self.save_epochs = dict()
         # Directory in which to save trained models
-        self.OUTPUT_PATH = "../trained_classifiers/"
+        self.OUTPUT_PATH = "trained_classifiers/"
 
         self.joy = EmotionClass('joy', self.docs)
         self.fear = EmotionClass('fear', self.docs)
@@ -151,6 +151,6 @@ class MultiClassPerceptron:
 
     @staticmethod
     def load_classifier(classifier_name):
-        OUTPUT_PATH = "../trained_classifiers/"
+        OUTPUT_PATH = "trained_classifiers/"
         with open(OUTPUT_PATH + classifier_name + ".pik", 'rb') as f:
             return pickle.load(f)
