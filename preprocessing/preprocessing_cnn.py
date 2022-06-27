@@ -1,4 +1,3 @@
-from nltk.tokenize import RegexpTokenizer
 from nltk.tokenize import word_tokenize
 import re
 
@@ -7,7 +6,6 @@ class Preprocessor:
 
     def __init__(self, file_name):
         self.file_name = file_name
-        # self.documents = [['1st label', '1st text'], ['2nd label', '2nd text']]
         self.documents = self.__remove_invalid_docs()
         self.text, self.label = self.read()
         self.tokenized_text = self.tokenize()
@@ -23,6 +21,7 @@ class Preprocessor:
     def __remove_invalid_docs(self) -> list:
         """
         Remove docs without labels and docs with invalid texts.
+        :return: list(list(strings)): list of documents with both label and text.
         """
         full_documents = self.__read_file()
         labeled_documents = list()
@@ -43,7 +42,7 @@ class Preprocessor:
     def read(self):
         """
         Read valid documents and split them into text list and label list.
-        :return: list of texts, list of labels
+        :return: list(string): list of texts, list(string): list of labels
         """
         documents = self.__remove_invalid_docs()
         text = []
@@ -55,24 +54,19 @@ class Preprocessor:
 
     def tokenize(self):
         """
-        First cleaning texts by removing unwanted leading and trailing whitespaces and quotation marks,
+        Cleaning texts by removing unwanted leading and trailing whitespaces and quotation marks,
         converting texts to lowercase.
-        Use nltk tokenizer to tokenize texts.
+        Then use nltk tokenizer to tokenize texts with punctuations retained.
         :return:list(list(string)), tokenized texts
         """
         tokenized_text = []
-        # word_tokenizer = RegexpTokenizer(r'[-\'\w]+')
         for text in self.text:
             text = text.strip(' ""''').lower()
-            # text = re.sub(r'[^\w\s]', '', text)
             text = word_tokenize(text)
-            # text = re.sub(r'[^\w\s]', '', text).split(' ')
-            # text = re.sub("(\\W|\\d)", " ", text)
-            # text = re.findall(r'[-\'\w]+', text)
             tokenized_text.append(text)
         return tokenized_text
 
 
-p = Preprocessor('data/isear-train.csv')
-tokens = p.tokenize()
-print(tokens)
+# p = Preprocessor('../data/isear-train.csv')
+# tokens = p.tokenize()
+# print(tokens[:5])
