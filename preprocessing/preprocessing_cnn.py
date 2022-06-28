@@ -9,6 +9,7 @@ class Preprocessor:
         self.documents = self.__remove_invalid_docs()
         self.text, self.label = self.read()
         self.tokenized_text = self.tokenize()
+        self.clean_text = self.clean_text()
 
     def __read_file(self) -> list:
         documents = list()
@@ -57,7 +58,7 @@ class Preprocessor:
         Cleaning texts by removing unwanted leading and trailing whitespaces and quotation marks,
         converting texts to lowercase.
         Then use nltk tokenizer to tokenize texts with punctuations retained.
-        :return:list(list(string)), tokenized texts
+        :return:list(list(string:tokens)), tokenized texts
         """
         tokenized_text = []
         for text in self.text:
@@ -66,7 +67,23 @@ class Preprocessor:
             tokenized_text.append(text)
         return tokenized_text
 
+    def clean_text(self):
+        """
+        Join all tokens back to a sentence.
+        :return: list(string:sentence), cleaned texts
+        """
+        clean_text = []
+        for tokens in self.tokenized_text:
+            clean_sentence = ' '.join(tokens)
+            clean_text.append(clean_sentence)
+        return clean_text
 
-# p = Preprocessor('../data/isear-train.csv')
-# tokens = p.tokenize()
-# print(tokens[:5])
+
+# p = Preprocessor('../data/isear-train.csv').clean_text()
+# # original = p.text
+# # clean = p.clean_text
+# label = p.label
+#
+# # print(original[:5])
+# print(p[:5])
+# print(label[:5])
