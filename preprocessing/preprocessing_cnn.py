@@ -1,5 +1,6 @@
 from nltk.tokenize import word_tokenize
 import re
+import numpy as np
 
 
 class Preprocessor:
@@ -9,7 +10,7 @@ class Preprocessor:
         self.documents = self.__remove_invalid_docs()
         self.text, self.label = self.read()
         self.tokenized_text = self.tokenize()
-        self.clean_text = self.clean_text()
+        self.X_array = self.clean_text()
 
     def __read_file(self) -> list:
         documents = list()
@@ -69,19 +70,23 @@ class Preprocessor:
 
     def clean_text(self):
         """
-        Join all tokens back to a sentence.
-        :return: list(string:sentence), cleaned texts
+        Join all tokens back to a sentence and convert to np.array
+        :return: cleaned texts (numpy.ndarray)
         """
         clean_text = []
         for tokens in self.tokenized_text:
             clean_sentence = ' '.join(tokens)
             clean_text.append(clean_sentence)
+        clean_text = np.array(clean_text)
         return clean_text
 
 
-# p = Preprocessor('../data/isear-train.csv').clean_text()
-# # original = p.text
-# # clean = p.clean_text
+# p = Preprocessor('../data/isear-train.csv')
+#
+# print(p.X_array)
+# print(type(p.X_array))
+# original = p.text
+# clean = p.clean_text
 # label = p.label
 #
 # # print(original[:5])
