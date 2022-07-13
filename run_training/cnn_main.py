@@ -4,7 +4,7 @@ from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, classifi
 
 
 def cnn():
-    cnn_model = CNN(vocab_size=7597, embedding_dims=50, filters=100, filter_size=1, hidden_dims=250, batch_size=50, epochs=1)
+    cnn_model = CNN(embedding_dims=50, filters=100, filter_size=1, hidden_dims=250, batch_size=50, epochs=1)
     cnn_model.preprocess()
     cnn_model.create_embedding_matrix('../glove.6B/glove.6B.50d.txt')
     cnn_model.compile()
@@ -18,11 +18,11 @@ def cnn():
     # cnn_model.load_model()
     # return cnn_model
 
-def cnn_with_multi_channels():
-    cnn_model = CNN(7597, 50, 100, 1, 250, 50, 30)
+def multi_channels_cnn():
+    cnn_model = CNN(50, 100, 1, 250, 50, 30)
     cnn_model.preprocess()
     cnn_model.create_embedding_matrix('../glove.6B/glove.6B.50d.txt')
-    cnn_model.define_multi_channels(1, 2, 3)
+    cnn_model.define_multi_channels([1, 2, 3])
     cnn_model.compile_multi_channels()
     cnn_model.fit_multi_channels()
     return cnn_model
@@ -34,4 +34,5 @@ def load_model(outpath):
     return model
 
 
-cnn = cnn()
+# cnn = cnn()
+multi_channels_cnn()

@@ -80,8 +80,12 @@ class Preprocessor:
         clean_text = np.array(clean_text)
         return clean_text
 
+    # calculate the maximum document length
+    def max_length(self):
+        return max([len(text.split()) for text in self.text])
 
 # p = Preprocessor('../data/isear-train.csv')
+# print(p.max_length())
 #
 # print(p.X_array)
 # print(type(p.X_array))

@@ -23,14 +23,15 @@ class CNN:
     1-channel: taking 1 filter size (n-grams with the same length)
     multi-channels: taking up to 3 filter sizes (n-grams with different lengths)
     """
-    def __init__(self, vocab_size, embedding_dims, filters, filter_size, hidden_dims, batch_size, epochs):
+    def __init__(self, embedding_dims, filters, filter_size, hidden_dims, batch_size, epochs):
 
-        self.vocab_size = vocab_size
+        # calculated from word index dictionary, and adding 1 for out of vocabulary token (OOV)
+        self.vocab_size = 7597
         self.oov_tok = "<OOV>"
         # sentence longer than maxlen will be truncated from the end
         self.trunc_type = "post"
-        # Max input length (number of words) for each text
-        self.maxlen = 300
+        # Max input length (number of words) for each text is calculated in preprocessing
+        self.maxlen = 180
 
         self.embedding_dims = embedding_dims
         self.filters = filters
@@ -55,7 +56,7 @@ class CNN:
         self.model = None
 
         self.output_path = '../trained_classifiers/'
-        # use y_pred (predicted labels in test set) and y_true (actual labels in test set) for evaluation
+        # use y_pred (predicted labels of test set) and y_true (actual labels in test set) for evaluation
         self.y_pred = []
         self.y_true = None
 
@@ -151,34 +152,32 @@ class CNN:
                       metrics=['accuracy'])
         self.model.summary()
 
-    def define_multi_channels(self, filter_size1, filter_size2, filter_size3):
+    def define_multi_channels(self, filter_sizes: list):
         """
-        Each channel is for processing different n-gram(s).
-        Then the output from the three channels are concatenated into a single vector
+        Each channel is for processing different n-grams.
+        Then the output from all channels are concatenated into a single vector
         for further processing for the final output.
-        :param filter_size_n: is an integer refer to filter size (n-gram(s))
+        :param: filter_sizes (list of integers), to specify filter sizes (different n of n-grams)
         """
-        # define the 1st channel: filter size=1
-        inputs1 = Input(shape=(self.maxlen,))
-        embedding1 = Embedding(self.vocab_size, self.embedding_dims)(inputs1)
-        conv1 = Conv1D(self.filters, filter_size1, activation='relu')(embedding1)
-        pool1 = GlobalMaxPooling1D()(conv1)
-        # define the 2nd channel: filter size=2
-        inputs2 = Input(shape=(self.maxlen,))
-        embedding2 = Embedding(self.vocab_size, self.embedding_dims)(inputs2)
-        conv2 = Conv1D(self.filters, filter_size2, activation='relu')(embedding2)
-        pool2 = GlobalMaxPooling1D()(conv2)
-        # define the 3rd channel: filter size=3
-        inputs3 = Input(shape=(self.maxlen,))
-        embedding3 = Embedding(self.vocab_size, self.embedding_dims)(inputs3)
-        conv3 = Conv1D(self.filters, filter_size3, activation='relu')(embedding3)
-        pool3 = GlobalMaxPooling1D()(conv3)
+        pool_list = []
+        input_list = []
+        for i in range(len(filter_sizes)):
+            # define the channel
+            inputs = Input(shape=(self.maxlen,))
+            embedding = Embedding(self.vocab_size, self.embedding_dims)(inputs)
+            conv = Conv1D(self.filters, filter_sizes[i], activation='relu')(embedding)
+            pool = GlobalMaxPooling1D()(conv)
+            print(pool, type(pool))
+            # append input and output layers from each channel to input_list and pool_list for concatenation later
+            input_list.append(inputs)
+            pool_list.append(pool)
 
-        merged = concatenate([pool1, pool2, pool3])
+        merged = concatenate(pool_list)
+        print(merged, type(merged))
         dense1 = Dense(self.hidden_dims, activation='relu')(merged)
         dropout = Dropout(0.5)(dense1)
         outputs = Dense(7, activation='sigmoid')(dropout)
-        self.model = Model(inputs=[inputs1, inputs2, inputs3], outputs=outputs)
+        self.model = Model(inputs=input_list, outputs=outputs)
 
     def compile_multi_channels(self):
         self.model.compile(loss='categorical_crossentropy',
