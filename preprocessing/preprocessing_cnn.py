@@ -1,6 +1,8 @@
 from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 import re
 import numpy as np
+import string
 
 
 class Preprocessor:
@@ -9,8 +11,8 @@ class Preprocessor:
         self.file_name = file_name
         self.documents = self.__remove_invalid_docs()
         self.text, self.label = self.read()
-        self.tokenized_text = self.tokenize()
-        self.X_array = self.clean_text()
+        self.tokenized_text = None
+        self.X_array = None
 
     def __read_file(self) -> list:
         documents = list()
@@ -54,45 +56,58 @@ class Preprocessor:
             text.append(i[1])
         return text, label
 
-    def tokenize(self):
+    def tokenize(self, removal=False):
         """
-        Cleaning texts by removing unwanted leading and trailing whitespaces and quotation marks,
-        converting texts to lowercase.
-        Then use nltk tokenizer to tokenize texts with punctuations retained.
+        :param removal: 'False' means stopwords and punctuation retained in texts
+        and 'True' means remove them from texts
+        Clean texts, converting texts into lowercase,
+        then use nltk tokenizer to tokenize texts
         :return:list(list(string:tokens)), tokenized texts
         """
         tokenized_text = []
-        for text in self.text:
-            text = text.strip(' ""''').lower()
-            text = word_tokenize(text)
-            tokenized_text.append(text)
-        return tokenized_text
+        if not removal:
+            for text in self.text:
+                text = text.strip(' ""''').lower()
+                text = word_tokenize(text)
+                tokenized_text.append(text)
+        else:
+            stop_words = set(stopwords.words('english'))
+            for text in self.text:
+                # replace all punctuation with None
+                text = text.translate(str.maketrans('', '', string.punctuation))
+                # remove all stopwords
+                filtered_text = []
+                for word in text.split():
+                    if word.lower() not in stop_words:
+                        filtered_text.append(word.lower())
+                tokenized_text.append(filtered_text)
 
-    def clean_text(self):
+        self.tokenized_text = tokenized_text
+
+    def join_text(self):
         """
         Join all tokens back to a sentence and convert to np.array
-        :return: cleaned texts (numpy.ndarray)
+        :return: numpy.ndarray, cleaned texts
         """
         clean_text = []
         for tokens in self.tokenized_text:
             clean_sentence = ' '.join(tokens)
             clean_text.append(clean_sentence)
         clean_text = np.array(clean_text)
-        return clean_text
+        self.X_array = clean_text
 
     # calculate the maximum document length
     def max_length(self):
         return max([len(text.split()) for text in self.text])
 
-# p = Preprocessor('../data/isear-train.csv')
-# print(p.max_length())
-#
-# print(p.X_array)
-# print(type(p.X_array))
-# original = p.text
-# clean = p.clean_text
-# label = p.label
-#
-# # print(original[:5])
-# print(p[:5])
-# print(label[:5])
+
+def X_and_y(data:Preprocessor, removal):
+    """
+    Prepare correct data types of X (features) and y (labels) to feed into the model.
+    :param data: data which needs to be preprocess by the Preprocessor
+    :param removal: whether stopwords and punctuation are removed or not
+    :return: numpy.ndarray: X, list(string): y
+    """
+    data.tokenize(removal)
+    data.join_text()
+    return data.X_array, data.label

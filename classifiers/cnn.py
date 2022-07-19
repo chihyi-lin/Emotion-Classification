@@ -7,21 +7,22 @@ from keras.utils import to_categorical
 import numpy as np
 # Keras layers
 from keras.models import Sequential, save_model, load_model
-from keras.layers import Dense, Dropout, Activation
-from keras.layers import Embedding, LSTM
-from keras.layers import Conv1D, GlobalMaxPooling1D, Flatten, MaxPooling1D
+from keras.layers import Dense, Dropout
+from keras.layers import Embedding
+from keras.layers import Conv1D, GlobalMaxPooling1D
 # For building multi channel
 from keras.layers import Input
 from keras.layers import concatenate
 from keras.models import Model
 from numpy import array
+from tensorflow import keras
 
 
 class CNN:
     """
     class CNN has two architectures:
-    1-channel: taking 1 filter size (n-grams with the same length)
-    multi-channels: taking up to 3 filter sizes (n-grams with different lengths)
+    single channel: taking 1 filter size (n-grams with the same length)
+    multi-channels: taking different filter sizes (n-grams with different lengths)
     """
     def __init__(self, embedding_dims, filters, filter_size, hidden_dims, batch_size, epochs):
 
@@ -39,7 +40,10 @@ class CNN:
         # the number of neurons in the hidden layer
         self.hidden_dims = hidden_dims
 
-        self.batch_size = batch_size  # 32
+        # number of different filter sizes in multi-channel
+        self.n_filter_size = None
+
+        self.batch_size = batch_size
         self.epochs = epochs
 
         self.X_train = None
@@ -60,23 +64,17 @@ class CNN:
         self.y_pred = []
         self.y_true = None
 
-    def preprocess(self):
+    def preprocess(self, removal):
         """
         Pre-process data to fit into model,
-        converting tokens into matrices,
-        generating word_index dictionary,
-        generating and padding texts into sequences of integers
+        convert tokens into matrices,
+        generate word_index dictionary,
+        generate and padding texts into sequences of integers
         :return: None
         """
-        train_data = Preprocessor('../data/isear-train.csv')
-        X_train = train_data.X_array
-        y_train = train_data.label
-        val_data = Preprocessor('../data/isear-val.csv')
-        X_val = val_data.X_array
-        y_val = val_data.label
-        test_data = Preprocessor('../data/isear-test.csv')
-        X_test = test_data.X_array
-        y_test = test_data.label
+        X_train, y_train = X_and_y(Preprocessor('../data/isear-train.csv'), removal)
+        X_val, y_val = X_and_y(Preprocessor('../data/isear-val.csv'), removal)
+        X_test, y_test = X_and_y(Preprocessor('../data/isear-test.csv'), removal)
         self.y_true = y_test
 
         le = LabelEncoder()
@@ -114,7 +112,7 @@ class CNN:
         and compare each word in word_index with embedding_index,
         if a match occurs, copy the equivalent vector into embedding_matrix at the corresponding index.
         :param file_path: "glove.6B" txt file
-        :return: np.array(embedding_matrix)
+        :return: (np.array), embedding_matrix
         """
         # embedding_index is used to save glove vectors
         embedding_index = {}
@@ -154,32 +152,34 @@ class CNN:
 
     def define_multi_channels(self, filter_sizes: list):
         """
-        Each channel is for processing different n-grams.
+        Each channel is for processing n-grams with different length.
         Then the output from all channels are concatenated into a single vector
         for further processing for the final output.
-        :param: filter_sizes (list of integers), to specify filter sizes (different n of n-grams)
+        :param (list of integers) filter_sizes: to specify multiple filter sizes (different n of n-grams)
         """
+        self.n_filter_size = len(filter_sizes)
         pool_list = []
         input_list = []
         for i in range(len(filter_sizes)):
             # define the channel
             inputs = Input(shape=(self.maxlen,))
-            embedding = Embedding(self.vocab_size, self.embedding_dims)(inputs)
+            embedding = Embedding(self.vocab_size, self.embedding_dims, input_length=self.maxlen, weights=[self.embedding_matrix], trainable=False)(inputs)
             conv = Conv1D(self.filters, filter_sizes[i], activation='relu')(embedding)
             pool = GlobalMaxPooling1D()(conv)
-            print(pool, type(pool))
             # append input and output layers from each channel to input_list and pool_list for concatenation later
             input_list.append(inputs)
             pool_list.append(pool)
 
         merged = concatenate(pool_list)
-        print(merged, type(merged))
         dense1 = Dense(self.hidden_dims, activation='relu')(merged)
         dropout = Dropout(0.5)(dense1)
         outputs = Dense(7, activation='sigmoid')(dropout)
         self.model = Model(inputs=input_list, outputs=outputs)
 
     def compile_multi_channels(self):
+        """
+        compile the multi-channels model and show model summary
+        """
         self.model.compile(loss='categorical_crossentropy',
                       optimizer='adam',
                       metrics=['accuracy'])
@@ -195,16 +195,24 @@ class CNN:
                        validation_data=(self.X_val, self.y_val))
 
     def fit_multi_channels(self):
-        self.model.fit([self.X_train, self.X_train, self.X_train], array(self.y_train),
-                       batch_size=self.batch_size,
-                       epochs=self.epochs,
-                       validation_data=([self.X_val, self.X_val, self.X_val], array(self.y_val)))
+        """
+        fit data to the multi-channels model
+        """
+        if self.n_filter_size == 2:
+            self.model.fit([self.X_train, self.X_train], array(self.y_train),
+                           batch_size=self.batch_size,
+                           epochs=self.epochs,
+                           validation_data=([self.X_val, self.X_val], array(self.y_val)))
+        if self.n_filter_size == 3:
+            self.model.fit([self.X_train, self.X_train, self.X_train], array(self.y_train),
+                           batch_size=self.batch_size,
+                           epochs=self.epochs,
+                           validation_data=([self.X_val, self.X_val, self.X_val], array(self.y_val)))
 
     def predict(self):
         """
         Predict on test set,
-        return the predicted labels as strings for further evaluation
-        :return: predicted labels (list of strings)
+        save the predicted labels as strings in y_pred list for further evaluation
         """
         predicted = self.model.predict(self.X_test)
         for label in predicted:
@@ -212,11 +220,22 @@ class CNN:
             predicted_label = self.class_name[np.argmax(label)]
             self.y_pred.append(predicted_label)
 
+    def predict_multi_channels(self):
+        """
+        predict with multi-channels model
+        """
+        if self.n_filter_size == 2:
+            predicted = self.model.predict([self.X_test, self.X_test])
+            for label in predicted:
+                predicted_label = self.class_name[np.argmax(label)]
+                self.y_pred.append(predicted_label)
+        if self.n_filter_size == 3:
+            predicted = self.model.predict([self.X_test, self.X_test, self.X_test])
+            for label in predicted:
+                predicted_label = self.class_name[np.argmax(label)]
+                self.y_pred.append(predicted_label)
+
+
     def save_model(self):
-        save_model(self.model, self.output_path)
-
-    # def load_model(self):
-    #     model = load_model(self.output_path, compile=True)
-    #     return model
-
-# TODO: implement predict and evaluation functions for multi-channel
+        # save_model(self.model, self.output_path)
+        self.model.save(self.output_path)
