@@ -1,3 +1,4 @@
+"""Author: Chih-Yi Lin"""
 class EmotionClass:
 
     def __init__(self, label, tokenized_docs):
