@@ -1,3 +1,4 @@
+"""Author: Chih-Yi Lin"""
 # Preprocessing data to the model
 from preprocessing.preprocessing_cnn import *
 from keras.preprocessing.text import Tokenizer
@@ -5,17 +6,17 @@ from keras_preprocessing.sequence import pad_sequences
 from sklearn.preprocessing import LabelEncoder
 from keras.utils import to_categorical
 import numpy as np
-# Keras layers
+# Keras layers and early stopping
 from keras.models import Sequential, save_model, load_model
 from keras.layers import Dense, Dropout
 from keras.layers import Embedding
 from keras.layers import Conv1D, GlobalMaxPooling1D
+from keras.callbacks import EarlyStopping
 # For building multi channel
 from keras.layers import Input
 from keras.layers import concatenate
 from keras.models import Model
 from numpy import array
-from tensorflow import keras
 
 
 class CNN:
@@ -189,8 +190,10 @@ class CNN:
         """
         fit data to the model
         """
+        # callback is for early stop training when the validation loss is no longer decreasing
+        callback = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=5)
         self.model.fit(self.X_train, self.y_train,
-                       batch_size=self.batch_size,
+                       batch_size=self.batch_size, callbacks=[callback],
                        epochs=self.epochs,
                        validation_data=(self.X_val, self.y_val))
 
@@ -198,14 +201,15 @@ class CNN:
         """
         fit data to the multi-channels model
         """
+        callback = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=5)
         if self.n_filter_size == 2:
             self.model.fit([self.X_train, self.X_train], array(self.y_train),
-                           batch_size=self.batch_size,
+                           batch_size=self.batch_size, callbacks=[callback],
                            epochs=self.epochs,
                            validation_data=([self.X_val, self.X_val], array(self.y_val)))
         if self.n_filter_size == 3:
             self.model.fit([self.X_train, self.X_train, self.X_train], array(self.y_train),
-                           batch_size=self.batch_size,
+                           batch_size=self.batch_size, callbacks=[callback],
                            epochs=self.epochs,
                            validation_data=([self.X_val, self.X_val, self.X_val], array(self.y_val)))
 
@@ -220,6 +224,10 @@ class CNN:
             predicted_label = self.class_name[np.argmax(label)]
             self.y_pred.append(predicted_label)
 
+        # evaluation: print accuracy for test set
+        scores = self.model.evaluate(self.X_test, self.y_test, verbose=1)
+        print("Accuracy: %.2f%%" % (scores[1] * 100))
+
     def predict_multi_channels(self):
         """
         predict with multi-channels model
@@ -229,11 +237,15 @@ class CNN:
             for label in predicted:
                 predicted_label = self.class_name[np.argmax(label)]
                 self.y_pred.append(predicted_label)
+            scores = self.model.evaluate([self.X_test, self.X_test], self.y_test, verbose=1)
+            print("Accuracy: %.2f%%" % (scores[1] * 100))
         if self.n_filter_size == 3:
             predicted = self.model.predict([self.X_test, self.X_test, self.X_test])
             for label in predicted:
                 predicted_label = self.class_name[np.argmax(label)]
                 self.y_pred.append(predicted_label)
+            scores = self.model.evaluate([self.X_test, self.X_test, self.X_test], self.y_test, verbose=1)
+            print("Accuracy: %.2f%%" % (scores[1] * 100))
 
 
     def save_model(self):
