@@ -15,16 +15,18 @@
 ## Reusing the Materials
 1. Clone this repository
 2. Get required python libraries
-### SVM
+### SVM (have not updated yet)
 ```
-conda install -c conda-forge scikit-learn
+pip install scikit-learn
 ```
 ### CNN
 Install Anaconda: https://docs.anaconda.com/anaconda/install/. Create an environment with conda and install all relevant libraries:
 ```
-conda install -c conda-forge scikit-learn
-conda install -c conda-forge tensorflow
-conda install -c conda-forge keras
+pip install scikit-learn
+pip install tensorflow
+pip install keras
+pip install numpy
+pip install nltk
 ```
 3. Run the 'Model'_main.py script
 ## Experiments
