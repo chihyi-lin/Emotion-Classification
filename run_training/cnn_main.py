@@ -1,3 +1,4 @@
+"""Author: Chih-Yi Lin"""
 from classifiers.cnn import *
 from sklearn.metrics import confusion_matrix, classification_report, ConfusionMatrixDisplay
 from tensorflow import keras
@@ -64,17 +65,7 @@ def y_pred_file(y_pred):
             fp.write("%s\n" % i)
         print('File Complete!')
 
-# y_pred = cnn()
-# y_pred = multi_channels_cnn()   # for error analysis
-# y_pred_file(y_pred)
+# To run a cnn model
 cnn()
-# multi_channels_cnn()
-# # Load saved model and predict: need to prepare X_test, class_name, y_true, y_pred to feed into model
-# model = load_model('../trained_classifiers/')
-# predicted = model.predict([X_test, X_test])
-# for label in predicted:
-#     predicted_label = class_name[np.argmax(label)]
-#     y_pred.append(predicted_label)
-# print("Detailed Report")
-# print(classification_report(y_true, y_pred, target_names=class_name))
-# print("\nConfusion Matrix:\n", confusion_matrix(y_true, y_pred))
+# To run a multi_channels cnn model
+multi_channels_cnn()
