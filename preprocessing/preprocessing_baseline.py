@@ -1,3 +1,4 @@
+"""Author: Chih-Yi Lin"""
 from nltk.tokenize import RegexpTokenizer
 from nltk.tokenize import word_tokenize
 import re
@@ -71,8 +72,3 @@ class Preprocessor:
             # text = re.findall(r'[-\'\w]+', text)
             tokenized_text.append(text)
         return tokenized_text
-
-
-p = Preprocessor('data/isear-train.csv')
-tokens = p.tokenize()
-print(tokens)
