@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 def cnn():
-    cnn_model = CNN(embedding_dims=100, filters=100, filter_size=3, hidden_dims=250, batch_size=50, epochs=30)
+    cnn_model = CNN(embedding_dims=100, filters=128, filter_size=3, hidden_dims=128, batch_size=50, epochs=30)
     # The `removal` parameter has two options: True - remove stopwords and punc ; False - without removal
     cnn_model.preprocess(removal=True)
     cnn_model.create_embedding_matrix('../glove.6B/glove.6B.100d.txt')
@@ -29,10 +29,10 @@ def cnn():
     return cnn_model.y_pred
 
 def multi_channels_cnn():
-    cnn_model = CNN(embedding_dims=100, filters=100, filter_size=1, hidden_dims=250, batch_size=50, epochs=1)
-    cnn_model.preprocess(removal=False)
+    cnn_model = CNN(embedding_dims=100, filters=128, filter_size=1, hidden_dims=128, batch_size=50, epochs=30)
+    cnn_model.preprocess(removal=True)
     cnn_model.create_embedding_matrix('../glove.6B/glove.6B.100d.txt')
-    cnn_model.define_multi_channels([3, 4])
+    cnn_model.define_multi_channels([2, 3, 4])
     cnn_model.compile_multi_channels()
     cnn_model.fit_multi_channels()
     # Save model
@@ -59,15 +59,16 @@ def load_model(outpath):
 
 def y_pred_file(y_pred):
     """write y_pred into a file for error analysis"""
-    with open('../y_pred_3_4_grams.txt', 'w') as fp:
+    with open('../y_pred_1_gram.txt', 'w') as fp:
         for i in y_pred:
             fp.write("%s\n" % i)
         print('File Complete!')
 
-# cnn = cnn()
-y_pred = multi_channels_cnn()   # for error analysis
-y_pred_file(y_pred)
-
+# y_pred = cnn()
+# y_pred = multi_channels_cnn()   # for error analysis
+# y_pred_file(y_pred)
+cnn()
+# multi_channels_cnn()
 # # Load saved model and predict: need to prepare X_test, class_name, y_true, y_pred to feed into model
 # model = load_model('../trained_classifiers/')
 # predicted = model.predict([X_test, X_test])
