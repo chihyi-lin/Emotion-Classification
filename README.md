@@ -4,11 +4,12 @@
 * Chih-Yi Lin
 * Yat Han Lai
 ## Project Introduction
-Different combinations of N-grams ranging from 1-2 to 3-4-grams are proposed to tackle the elusive nature of emotion expression in textual data. This approach is tested by comparing support vector machine (SVM) and convolutional neural network (CNN). The experiments demonstrate that our approach is effective when combining more N-grams in CNN, whereas the performance of SVM is only better when combinations containing 1-gram, and n-gram with higher n degrades the performance.
+* Different combinations of N-grams ranging from 1-2 to 3-4-grams are proposed to tackle the elusive nature of emotion expression in textual data. This approach is tested by comparing support vector machine (SVM) and convolutional neural network (CNN). The experiments demonstrate that our approach is effective when combining more N-grams in CNN, whereas the performance of SVM is only better when combinations containing 1-gram, and n-gram with higher n degrades the performance.
+* Initial work: A multi-class perceptron using bag-of-words was built from scratch is also provided.
 
 ## Experiments
 ### Dataset
-All experiments used the International Survey on Emotion Antecedents and Reactions (ISEAR) dataset, in which seven primary emotions, namely joy, fear, anger, sadness, disgust, shame and guilt were reported. Dataset is available from [SWISS CENTER FOR AFFECTIVE SCIENCES](https://www.unige.ch/cisa/research/materials-and-online-research/research-material/).
+All experiments used the International Survey on Emotion Antecedents and Reactions (ISEAR) dataset, in which texts are catergorized into seven emotions: joy, fear, anger, sadness, disgust, shame and guilt were reported. Dataset is available from [SWISS CENTER FOR AFFECTIVE SCIENCES](https://www.unige.ch/cisa/research/materials-and-online-research/research-material/).
 ### Data Preprocessing
 All texts are converted into lowercase and tokenized, without stemming. Two data preprocessing settings are applied to experiment their effects on models' performance: 
 * Setting 1: with tokenization only
