@@ -4,7 +4,7 @@
 * Chih-Yi Lin
 * Yat Han Lai
 ## Project Introduction
-Different combinations of N-grams ranging from 1-2 to 3-4-grams are proposed to tackle the elusive nature of emotion expression in textual data. This approach is tested by comparing support vector machine (SVM) and convolutional neural network (CNN). The experiments demonstrate that our approach is effective when combining more N-grams in CNN, whereas the performance of SVM degrades when more N-grams are combined.
+Different combinations of N-grams ranging from 1-2 to 3-4-grams are proposed to tackle the elusive nature of emotion expression in textual data. This approach is tested by comparing support vector machine (SVM) and convolutional neural network (CNN). The experiments demonstrate that our approach is effective when combining more N-grams in CNN, whereas the performance of SVM is only better when combinations containing 1-gram, and n-gram with higher n degrades the performance.
 
 ## Experiments
 ### Dataset
@@ -25,3 +25,8 @@ All texts are converted into lowercase and tokenized, without stemming. Two data
 |          |1-2-grams|**0.56** |0.58 |
 |          |3-4-grams|0.39 |0.58 |
 |          |1-3-grams|0.55 |**0.61** |
+|Setting 2 |1-gram   |0.55 |0.55 |
+|          |3-grams  |0.15 |0.53 |
+|          |1-2-grams|0.54 |0.56 |
+|          |3-4-grams|0.15 |0.54 |
+|          |1-3-grams|0.54 |0.58 |
