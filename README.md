@@ -1,12 +1,32 @@
 # Emotion Classification on Textual Data
 > Project of CL Team Lab, 22SS, University of Stuttgart
 ## Contributors
-* Chih-Yi Lin
-* Yat Han Lai
+* [Chih-Yi Lin](https://github.com/chihyi-lin)
+* [Yat Han Lai](https://github.com/laiyathan)
 ## Project Introduction
 * Different combinations of N-grams ranging from 1-2 to 3-4-grams are proposed to tackle the elusive nature of emotion expression in textual data. This approach is tested by comparing support vector machine (SVM) and convolutional neural network (CNN). The experiments demonstrate that our approach is effective when combining more N-grams in CNN, whereas the performance of SVM is only better when combinations containing 1-gram, and n-gram with higher n degrades the performance.
 * Initial work: A multi-class perceptron using bag-of-words was built from scratch is also provided.
-
+## Folders of This Repository
+* classifier: Perceptron baseline module, CNN module
+* evaluaion: evaluaion - to calculate precision, recall, and F1 score for perceptron baseline
+* preprocessing: preprocessing classes for perceptron baseline and CNN
+* run_training: 'Model'_main.py is for training model
+* trained_classifiers: Folder for saving trained models
+## Reusing the Materials
+1. Clone this repository
+2. Get required python libraries
+### SVM
+```
+conda install -c conda-forge scikit-learn
+```
+### CNN
+Install Anaconda: https://docs.anaconda.com/anaconda/install/. Create an environment with conda and install all relevant libraries:
+```
+conda install -c conda-forge scikit-learn
+conda install -c conda-forge tensorflow
+conda install -c conda-forge keras
+```
+3. Run the 'Model'_main.py script
 ## Experiments
 ### Dataset
 All experiments used the International Survey on Emotion Antecedents and Reactions (ISEAR) dataset, in which texts are catergorized into seven emotions: joy, fear, anger, sadness, disgust, shame and guilt were reported. Dataset is available from [SWISS CENTER FOR AFFECTIVE SCIENCES](https://www.unige.ch/cisa/research/materials-and-online-research/research-material/).
