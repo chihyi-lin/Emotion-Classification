@@ -1,0 +1,8 @@
+venv
+.idea
+glove.6B
+data
+venv/**
+.idea/**
+glove.6B/**
+data/**

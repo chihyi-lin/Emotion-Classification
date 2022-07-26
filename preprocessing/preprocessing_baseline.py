@@ -1,12 +1,17 @@
+"""Author: Chih-Yi Lin"""
+from nltk.tokenize import RegexpTokenizer
+from nltk.tokenize import word_tokenize
 import re
 
 
-class Corpus:
+class Preprocessor:
 
     def __init__(self, file_name):
         self.file_name = file_name
-        # self.documents = [['1st label', '1st text', 'text1_id'], ['2nd label', '2nd text', 'text2_id']]
-        self.documents = self.assign_text_id()
+        # self.documents = [['1st label', '1st text'], ['2nd label', '2nd text']]
+        self.documents = self.__remove_invalid_docs()
+        self.text, self.label = self.read()
+        self.tokenized_text = self.tokenize()
 
     def __read_file(self) -> list:
         documents = list()
@@ -18,7 +23,7 @@ class Corpus:
 
     def __remove_invalid_docs(self) -> list:
         """
-        remove docs without labels and docs with invalid texts.
+        Remove docs without labels and docs with invalid texts.
         """
         full_documents = self.__read_file()
         labeled_documents = list()
@@ -36,30 +41,29 @@ class Corpus:
                 cleaned_documents.append(doc)
         return cleaned_documents
 
-    def assign_text_id(self) -> list:
+    def read(self):
+        """
+        Read valid documents and split them into text list and label list.
+        :return: list of texts, list of labels
+        """
         documents = self.__remove_invalid_docs()
-        text_id = 1
-        for doc in documents:
-            doc.append(text_id)
-            text_id += 1
-        return documents
+        text = []
+        label = []
+        for i in documents:
+            label.append(i[0])
+            text.append(i[1])
+        return text, label
 
-
-class Document:
-
-    def __init__(self, docs):
-        self.docs = docs
-
-    def tokenize(self) -> list:
-        #  TODO: Use NLTK to tokenize texts.
+    def tokenize(self):
         """
-        Convert texts into lowercase, remove punctuations, tokenizing texts.
-        :return: docs = [['1st label', ['1st tokenized text'], 1st text_id],...]
+        First cleaning texts by removing unwanted leading and trailing whitespaces and quotation marks,
+        converting texts to lowercase.
+        Use nltk tokenizer to tokenize texts.
+        :return:list(list(string)), tokenized texts
         """
-        for doc in self.docs:
-            text = doc[1]
-            text = text.lower()
-            text = re.sub("(\\W|\\d)", " ", text)
-            text = re.findall(r'[-\'\w]+', text)
-            doc[1] = text
-        return self.docs
+        tokenized_text = []
+        for text in self.text:
+            text = text.strip(' ""''').lower()
+            text = word_tokenize(text)
+            tokenized_text.append(text)
+        return tokenized_text
