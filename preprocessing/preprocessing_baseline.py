@@ -62,13 +62,8 @@ class Preprocessor:
         :return:list(list(string)), tokenized texts
         """
         tokenized_text = []
-        # word_tokenizer = RegexpTokenizer(r'[-\'\w]+')
         for text in self.text:
             text = text.strip(' ""''').lower()
-            # text = re.sub(r'[^\w\s]', '', text)
             text = word_tokenize(text)
-            # text = re.sub(r'[^\w\s]', '', text).split(' ')
-            # text = re.sub("(\\W|\\d)", " ", text)
-            # text = re.findall(r'[-\'\w]+', text)
             tokenized_text.append(text)
         return tokenized_text
