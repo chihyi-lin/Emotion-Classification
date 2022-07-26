@@ -1,3 +1,4 @@
+"""Author: Chih-Yi Lin"""
 from classifiers.perceptron_baseline_emotion_classes import *
 from evaluation.evaluation import *
 import pickle
