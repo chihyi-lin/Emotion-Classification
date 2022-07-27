@@ -10,7 +10,7 @@
 * classifier: Perceptron baseline module, CNN module
 * evaluaion: evaluaion - to calculate precision, recall, and F1 score for perceptron baseline
 * preprocessing: preprocessing classes for perceptron baseline and CNN
-* run_training: 'ModelName'_main.py is for training model
+* run_training: 'ModelName_main.py' is for training model
 * trained_classifiers: Folder for saving trained models
 ## Reusing the Materials
 1. Clone this repository
@@ -31,7 +31,7 @@ pip install nltk
 * Download pre-trained GloVe embeddings from http://nlp.stanford.edu/data/glove.6B.zip
   - Create 'glove.6B' folder in the repository and save 'glove.6B.100d.txt' file there
 3. Download the ISEAR dataset from [SWISS CENTER FOR AFFECTIVE SCIENCES](https://www.unige.ch/cisa/research/materials-and-online-research/research-material/) and save the dataset in 'data' folder
-4. Run the 'ModelName'_main.py script in 'run_training' folder
+4. Run the 'ModelName_main.py' script in 'run_training' folder
 
 ## Experiments
 ### Dataset
