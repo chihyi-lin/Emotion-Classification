@@ -1,3 +1,5 @@
+"""Author: Chih-Yi Lin"""
+from nltk.tokenize import word_tokenize
 import re
 
 
@@ -58,8 +60,7 @@ class Document:
         """
         for doc in self.docs:
             text = doc[1]
-            text = text.lower()
-            text = re.sub("(\\W|\\d)", " ", text)
-            text = re.findall(r'[-\'\w]+', text)
+            text = text.strip(' ""''').lower()
+            text = word_tokenize(text)
             doc[1] = text
         return self.docs

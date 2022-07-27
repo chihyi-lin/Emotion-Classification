@@ -1,3 +1,4 @@
+"""Author: Chih-Yi Lin"""
 from preprocessing.preprocessing_baseline import *
 from classifiers.perceptron_baseline import *
 
@@ -5,8 +6,8 @@ from classifiers.perceptron_baseline import *
 class TrainingProcess:
 
     def __init__(self, iteration):
-        self.training_data = self.preprocessing('data/isear-train.csv')
-        self.validation_data = self.preprocessing('data/isear-val.csv')
+        self.training_data = self.preprocessing('../data/isear-train.csv')
+        self.validation_data = self.preprocessing('../data/isear-val.csv')
         self.iteration = iteration
 
     # Create documents as a nested list, tokenizing texts
