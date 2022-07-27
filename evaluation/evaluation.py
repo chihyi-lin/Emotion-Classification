@@ -1,4 +1,4 @@
-# TODO: 1. confusion matrix 2. change input data structure
+"""Author: Chih-Yi Lin and Yat Han Lai"""
 class Evaluation:
     """
     Computing precision, recall and f-score by comparing gold labels and predicted labels in the same list of documents
