@@ -14,10 +14,9 @@
 * trained_classifiers: Folder for saving trained models
 ## Reusing the Materials
 1. Clone this repository
-2. Get required python libraries, GloVe embeddings
-### SVM (have not updated yet)
+2. Get required pip libraries
 ```
-pip install scikit-learn
+pip install -r requirements.txt
 ```
 ### CNN
 * Install Anaconda: https://docs.anaconda.com/anaconda/install/. Create an environment with conda and install all relevant libraries:
