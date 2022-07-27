@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 def cnn():
     cnn_model = CNN(embedding_dims=100, filters=128, filter_size=3, hidden_dims=128, batch_size=50, epochs=30)
     # The `removal` parameter has two options: True - remove stopwords and punc ; False - without removal
-    cnn_model.preprocess(removal=True)
+    cnn_model.preprocess(removal=False)
     cnn_model.create_embedding_matrix('../glove.6B/glove.6B.100d.txt')
     cnn_model.compile()
     cnn_model.fit()
@@ -31,9 +31,9 @@ def cnn():
 
 def multi_channels_cnn():
     cnn_model = CNN(embedding_dims=100, filters=128, filter_size=1, hidden_dims=128, batch_size=50, epochs=30)
-    cnn_model.preprocess(removal=True)
+    cnn_model.preprocess(removal=False)
     cnn_model.create_embedding_matrix('../glove.6B/glove.6B.100d.txt')
-    cnn_model.define_multi_channels([2, 3, 4])
+    cnn_model.define_multi_channels([1, 2, 3])
     cnn_model.compile_multi_channels()
     cnn_model.fit_multi_channels()
     # Save model
@@ -67,5 +67,5 @@ def y_pred_file(y_pred):
 
 # To run a cnn model
 cnn()
-# To run a multi_channels cnn model
-multi_channels_cnn()
+# Uncomment the following code to run a multi_channels cnn model
+# multi_channels_cnn()
