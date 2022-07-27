@@ -10,17 +10,17 @@
 * classifier: Perceptron baseline module, CNN module
 * evaluaion: evaluaion - to calculate precision, recall, and F1 score for perceptron baseline
 * preprocessing: preprocessing classes for perceptron baseline and CNN
-* run_training: 'Model'_main.py is for training model
+* run_training: 'ModelName'_main.py is for training model
 * trained_classifiers: Folder for saving trained models
 ## Reusing the Materials
 1. Clone this repository
-2. Get required python libraries
+2. Get required python libraries, GloVe embeddings
 ### SVM (have not updated yet)
 ```
 pip install scikit-learn
 ```
 ### CNN
-Install Anaconda: https://docs.anaconda.com/anaconda/install/. Create an environment with conda and install all relevant libraries:
+* Install Anaconda: https://docs.anaconda.com/anaconda/install/. Create an environment with conda and install all relevant libraries:
 ```
 pip install scikit-learn
 pip install tensorflow
@@ -28,10 +28,14 @@ pip install keras
 pip install numpy
 pip install nltk
 ```
-3. Run the 'Model'_main.py script
+* Download pre-trained GloVe embeddings from http://nlp.stanford.edu/data/glove.6B.zip.
+** Create 'glove.6B' folder in the repository, save 'glove.6B.100d.txt' file there
+3. Download dataset from [SWISS CENTER FOR AFFECTIVE SCIENCES](https://www.unige.ch/cisa/research/materials-and-online-research/research-material/) and save dataset in 'data' folder
+4. Run the 'ModelName'_main.py script in 'run_training' folder
+
 ## Experiments
 ### Dataset
-All experiments used the International Survey on Emotion Antecedents and Reactions (ISEAR) dataset, in which texts are catergorized into seven emotions: joy, fear, anger, sadness, disgust, shame and guilt were reported. Dataset is available from [SWISS CENTER FOR AFFECTIVE SCIENCES](https://www.unige.ch/cisa/research/materials-and-online-research/research-material/).
+All experiments used the International Survey on Emotion Antecedents and Reactions (ISEAR) dataset, in which texts are catergorized into seven emotions: joy, fear, anger, sadness, disgust, shame and guilt.
 ### Data Preprocessing
 All texts are converted into lowercase and tokenized, without stemming. Two data preprocessing settings are applied to experiment their effects on models' performance: 
 * Setting 1: with tokenization only
@@ -39,7 +43,7 @@ All texts are converted into lowercase and tokenized, without stemming. Two data
 ### SVM
 * Text representaion: TF-IDF
 ### CNN
-* Word embeddings: Pre-trained GloVe embeddings with 100 dimensions, which is available from http://nlp.stanford.edu/data/glove.6B.zip.
+* Word embeddings: Pre-trained GloVe embeddings with 100 dimensions
 ### Experiment Results
 |Preprocess|Features | SVM | CNN |
 |----------|---------|-----|-----|
