@@ -18,6 +18,11 @@
 ```
 pip install -r requirements.txt
 ```
+### SVM
+* Install Spacy
+```
+python -m spacy download en_core_web_sm
+```
 ### CNN
 * Install Anaconda: https://docs.anaconda.com/anaconda/install/. Create an environment with conda and install all relevant libraries:
 ```
