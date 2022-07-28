@@ -4,7 +4,7 @@
 * [Chih-Yi Lin](https://github.com/chihyi-lin)
 * [Yat Han Lai](https://github.com/laiyathan)
 ## Project Introduction
-* Different combinations of n-grams ranging from 1-2 to 3-4-grams are proposed to tackle the elusive nature of emotion expression in textual data. This approach is tested by comparing support vector machine (SVM) and convolutional neural network (CNN). The experiments demonstrate that our approach is effective when combining more n-grams in CNN, whereas the performance of SVM is only better when combinations containing 1-gram, and n-gram with higher n degrades the performance.
+* Different combinations of n-grams ranging from 1-2 to 3-4-grams are proposed to tackle the elusive nature of emotion expression in textual data. This approach is tested by comparing support vector machine (SVM) and convolutional neural network (CNN). The experiments demonstrate that our approach is effective when combining more n-grams in CNN, whereas the performance of SVM degrades when combining higher n-grams.
 * Initial work: A multi-class perceptron using bag-of-words built from scratch is also provided.
 ## Folders of This Repository
 * classifier: Perceptron baseline module, CNN module
