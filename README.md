@@ -19,9 +19,11 @@
 pip install -r requirements.txt
 ```
 ### SVM
-* Install Spacy
 ```
-python -m spacy download en_core_web_sm
+python ./scripts/main_svm.py
+
+# or for windows
+python .\scripts\main_svm.py
 ```
 ### CNN
 * Install Anaconda: https://docs.anaconda.com/anaconda/install/. Create an environment with conda and install all relevant libraries:
