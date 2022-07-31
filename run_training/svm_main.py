@@ -14,9 +14,9 @@ from sklearn.metrics import classification_report
 from sklearn.pipeline import FeatureUnion
 
 
-df_train = pd.read_csv("/Users/yathanlai/Desktop/Pycharm/isear-train.csv", sep='\t', header=None, encoding='utf-8')
-df_test = pd.read_csv("/Users/yathanlai/Desktop/Pycharm/isear-test.csv", sep='\t', header=None, encoding='utf-8')
-df_val = pd.read_csv("/Users/yathanlai/Desktop/Pycharm/isear-val.csv", sep='\t', header=None, encoding='utf-8')
+df_train = pd.read_csv("...data/isear-train.csv", sep='\t', header=None, encoding='utf-8')
+df_test = pd.read_csv("...data/isear-test.csv", sep='\t', header=None, encoding='utf-8')
+df_val = pd.read_csv("...data/isear-val.csv", sep='\t', header=None, encoding='utf-8')
 
 # pd.set_option('display.max_column', None)
 # pd.set_option('display.max_colwidt', 200)
