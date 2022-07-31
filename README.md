@@ -51,11 +51,11 @@ All texts are converted into lowercase and tokenized, without stemming. Two data
 ### Experiment Results
 |Preprocess|Features | SVM | CNN |
 |----------|---------|-----|-----|
-|Setting 1 |1-gram   |0.55 |0.56 |
+|Setting 1 |1-gram   |0.54 |0.56 |
 |          |3-grams  |0.42 |0.58 |
-|          |1-2-grams|**0.56** |0.58 |
-|          |3-4-grams|0.39 |0.58 |
-|          |1-3-grams|0.55 |**0.61** |
+|          |1-2-grams|0.55 |0.58 |
+|          |3-4-grams|0.41 |0.58 |
+|          |1-3-grams|**0.56** |**0.61** |
 |Setting 2 |1-gram   |0.55 |0.55 |
 |          |3-grams  |0.15 |0.53 |
 |          |1-2-grams|0.54 |0.56 |
