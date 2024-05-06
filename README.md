@@ -1,5 +1,6 @@
 # Emotion Classification on Textual Data
 > Project of CL Team Lab, 22SS, University of Stuttgart
+Checkout the [report](https://github.com/chihyi-lin/Emotion-Classification/blob/main/final_report.pdf) for more details.
 ## Contributors
 * [Chih-Yi Lin](https://github.com/chihyi-lin)
 * [Yat Han Lai](https://github.com/laiyathan)
